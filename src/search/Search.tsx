@@ -1,12 +1,10 @@
 import { Component, ReactNode } from 'react';
+import { LSKey } from '../constants/types';
 
 type TSearch = {
+  defaultValue: string;
   searchHandler: (value: string) => void;
 };
-
-enum LSKey {
-  lastSearch = 'lastSearch',
-}
 
 export default class Search extends Component<TSearch> {
   constructor(props: TSearch) {
@@ -22,22 +20,24 @@ export default class Search extends Component<TSearch> {
   };
 
   state = {
-    currentSearch: this.loadLastSearch(),
+    currentSearch: this.props.defaultValue,
   };
 
   render(): ReactNode {
     return (
       <>
         <input
-          onKeyUp={(e) => {if(e.key === 'Enter') this.search()}}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') this.search();
+          }}
           value={this.state.currentSearch}
           onChange={(e) => this.setState({ currentSearch: e.target.value })}
           placeholder="Type something"
-          className="flex h-6 sm:h-7 content-center justify-center flex-wrap rounded"
+          className="flex h-6 sm:h-7 content-center justify-center flex-wrap rounded mt-1"
         ></input>
         <button
           onClick={this.search}
-          className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5"
+          className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5 mt-1"
         >
           Search
         </button>

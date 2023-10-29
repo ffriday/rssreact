@@ -10,6 +10,18 @@ export type TAstromicalObject = {
   location: TAstronomicalLocation;
 };
 
-export type TAstroObjectState = {
+export type TAstroObjectList = {
   AstromicalObject: TAstromicalObject[];
 };
+
+export type TError = {
+  error: string;
+};
+
+export enum LSKey {
+  lastSearch = 'lastSearch',
+}
+
+export enum TErrorInfo {
+  empty = 'No Results',
+}

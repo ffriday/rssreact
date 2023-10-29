@@ -1,9 +1,9 @@
 import { Component, ReactNode } from 'react';
 import AstroObject from './AstroObject';
-import { TAstroObjectState } from '../constants/types';
+import { TAstroObjectList } from '../constants/types';
 
-export default class AstroObjectList extends Component<TAstroObjectState> {
-  constructor(props: TAstroObjectState) {
+export default class AstroObjectList extends Component<TAstroObjectList> {
+  constructor(props: TAstroObjectList) {
     super(props);
   }
 
