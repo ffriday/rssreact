@@ -2,7 +2,12 @@ import { Component, ReactNode } from 'react';
 import Search from './search/Search';
 import { apiEnv } from './constants/env';
 import AstroObjectList from './content/AstroObjectList';
-import { TAstroObjectList, TAstromicalObject, TError, TErrorInfo } from './constants/types';
+import {
+  TAstroObjectList,
+  TAstromicalObject,
+  TError,
+  TErrorInfo,
+} from './constants/types';
 import { loadLastSearch } from './helpers/helpers';
 import ErrorBox from './errorBox/error';
 
@@ -38,18 +43,21 @@ export default class App extends Component {
       if (res.ok) {
         const { astronomicalObjects }: TBodyResponse = await res.json();
         this.setState({ AstromicalObject: astronomicalObjects });
-        if(!astronomicalObjects.length) this.setState({error: TErrorInfo.empty});
+        if (!astronomicalObjects.length)
+          this.setState({ error: TErrorInfo.empty });
       }
     } catch (error) {
-      if(error instanceof Error) this.setState({ error: error.message });
+      if (error instanceof Error) this.setState({ error: error.message });
     }
   };
 
   fakeError = () => {
     try {
-      {throw new Error('Test error')};
+      {
+        throw new Error('Test error');
+      }
     } catch (error) {
-      if(error instanceof Error) this.setState({ error: error.message });
+      if (error instanceof Error) this.setState({ error: error.message });
     }
   };
 
@@ -59,7 +67,8 @@ export default class App extends Component {
   };
 
   render(): ReactNode {
-    if(this.state.error && this.state.error !== TErrorInfo.empty) throw new Error('Test error');
+    if (this.state.error && this.state.error !== TErrorInfo.empty)
+      throw new Error('Test error');
     return (
       <main className="flex flex-col justify-top h-full bg-gray-700 font-mono">
         <nav className="h-15 sm:h-10 flex flex-row flex-wrap content-center justify-start pb-2">
@@ -75,8 +84,11 @@ export default class App extends Component {
           </button>
         </nav>
         <section className="h-auto bg-gray-700">
-          {this.state.error ? <ErrorBox error={this.state.error} /> 
-          : <AstroObjectList AstromicalObject={this.state.AstromicalObject} />}
+          {this.state.error ? (
+            <ErrorBox error={this.state.error} />
+          ) : (
+            <AstroObjectList AstromicalObject={this.state.AstromicalObject} />
+          )}
         </section>
       </main>
     );

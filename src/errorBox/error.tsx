@@ -8,7 +8,7 @@ export default class ErrorBox extends Component<TError> {
 
   render(): ReactNode {
     return (
-      <div className='flex bg-red-500 font-mon pl-2 text-white content-center justify-center'>
+      <div className="flex bg-red-500 font-mon pl-2 text-white content-center justify-center">
         {this.props.error}
       </div>
     );
