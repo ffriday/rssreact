@@ -1,9 +1,37 @@
 import { Component, ReactNode } from 'react';
 import Search from './search/Search';
+import { apiEnv } from './constants/env';
+
+type TAstronomicalLocation = {
+  name: string;
+  uid: string;
+}
+
+export type TAstromicalObject = {
+  astronomicalObjectType: string;
+  name: string;
+  uid: string;
+  location: TAstronomicalLocation;
+};
 
 export default class App extends Component {
-  search = (value: string) => {
-    console.log(value);
+  request = async (name: string, pageSize: number) => {
+    return await fetch(`${apiEnv.url}${apiEnv.endpoint}?name=${name}&pageSize=${pageSize}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+  };
+
+  search = async (value: string) => {
+    const res = await this.request(value, 10)
+    const body: TAstromicalObject[] = await res.json();
+    console.log(body);
+  };
+
+  state: Readonly<object> = {
+
   };
 
   render(): ReactNode {
