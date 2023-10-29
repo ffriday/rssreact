@@ -8,10 +8,12 @@ export default class AstroObject extends Component<TAstromicalObject> {
 
   render(): ReactNode {
     return (
-      <li className='flex flex-col bg-gray-600 font-mon pl-2 text-white'>
+      <li className="flex flex-col bg-gray-600 font-mon pl-2 text-white">
         <h3>Name: {this.props.name}</h3>
         <p>Object type: {this.props.astronomicalObjectType}</p>
-        <p>Location: {this.props.location ? this.props.location.name : 'Unknown'}</p>
+        <p>
+          Location: {this.props.location ? this.props.location.name : 'Unknown'}
+        </p>
       </li>
     );
   }

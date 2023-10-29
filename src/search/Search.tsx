@@ -29,6 +29,7 @@ export default class Search extends Component<TSearch> {
     return (
       <>
         <input
+          onKeyUp={(e) => {if(e.key === 'Enter') this.search()}}
           value={this.state.currentSearch}
           onChange={(e) => this.setState({ currentSearch: e.target.value })}
           placeholder="Type something"

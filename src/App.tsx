@@ -21,6 +21,10 @@ export default class App extends Component {
     );
   };
 
+  componentDidMount() {
+    this.search('');
+  }
+
   search = async (value: string) => {
     const res = await this.request(value, 50);
     if (res.ok) {

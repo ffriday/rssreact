@@ -9,7 +9,7 @@ export default class AstroObjectList extends Component<TAstroObjectState> {
 
   render(): ReactNode {
     return (
-      <ul className='flex flex-col gap-1 px-2'>
+      <ul className="flex flex-col gap-1 px-2">
         {this.props.AstromicalObject.map((element) => (
           <AstroObject key={element.uid} {...element} />
         ))}
