@@ -13,7 +13,7 @@ export default class App extends Component {
           <h1 className="text-xl sm:text-2xl w-screen sm:w-max sm:pr-10 font-bold text-red-400 text-left">
             RSS Astro Objects
           </h1>
-          <Search searchHandler={this.search}/>
+          <Search searchHandler={this.search} />
         </nav>
         <section className="h-auto">CONTENT</section>
       </main>
