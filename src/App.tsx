@@ -2,6 +2,10 @@ import { Component, ReactNode } from 'react';
 import Search from './search/Search';
 
 export default class App extends Component {
+  search = (value: string) => {
+    console.log(value);
+  };
+
   render(): ReactNode {
     return (
       <main className="flex flex-col justify-top h-screen bg-gray-700 font-mono">
@@ -9,7 +13,7 @@ export default class App extends Component {
           <h1 className="text-xl sm:text-2xl w-screen sm:w-max sm:pr-10 font-bold text-red-400 text-left">
             RSS Astro Objects
           </h1>
-          <Search />
+          <Search searchHandler={this.search}/>
         </nav>
         <section className="h-auto">CONTENT</section>
       </main>
