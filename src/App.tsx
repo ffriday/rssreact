@@ -91,7 +91,9 @@ export default class App extends Component {
           </button>
         </nav>
         <section className="h-auto bg-gray-700">
-          {this.state.loading && <ErrorBox error="Loading..." color={TColor.lime} />}
+          {this.state.loading && (
+            <ErrorBox error="Loading..." color={TColor.lime} />
+          )}
           {this.state.error ? (
             <ErrorBox error={this.state.error} color={TColor.red} />
           ) : (
