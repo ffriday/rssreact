@@ -5,6 +5,7 @@ import AstroObjectList from './content/AstroObjectList';
 import {
   TAstroObjectList,
   TAstromicalObject,
+  TColor,
   TError,
   TErrorInfo,
 } from './constants/types';
@@ -15,7 +16,10 @@ type TBodyResponse = {
   astronomicalObjects: TAstromicalObject[];
 };
 
-type TAppState = TAstroObjectList & TError;
+type TAppState = TAstroObjectList &
+  TError & {
+    loading: boolean;
+  };
 
 export default class App extends Component {
   private lastSearch = loadLastSearch();
@@ -38,6 +42,7 @@ export default class App extends Component {
 
   search = async (value: string) => {
     this.setState({ error: '' });
+    this.setState({ loading: true });
     try {
       const res = await this.request(value, 50);
       if (res.ok) {
@@ -49,6 +54,7 @@ export default class App extends Component {
     } catch (error) {
       if (error instanceof Error) this.setState({ error: error.message });
     }
+    this.setState({ loading: false });
   };
 
   fakeError = () => {
@@ -64,6 +70,7 @@ export default class App extends Component {
   state: Readonly<TAppState> = {
     AstromicalObject: [],
     error: '',
+    loading: false,
   };
 
   render(): ReactNode {
@@ -84,8 +91,9 @@ export default class App extends Component {
           </button>
         </nav>
         <section className="h-auto bg-gray-700">
+          {this.state.loading && <ErrorBox error="Loading..." color={TColor.lime} />}
           {this.state.error ? (
-            <ErrorBox error={this.state.error} />
+            <ErrorBox error={this.state.error} color={TColor.red} />
           ) : (
             <AstroObjectList AstromicalObject={this.state.AstromicalObject} />
           )}

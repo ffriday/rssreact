@@ -1,14 +1,12 @@
 import { Component, ReactNode } from 'react';
-import { TError } from '../constants/types';
+import { TColor, TError } from '../constants/types';
 
 export default class ErrorBox extends Component<TError> {
-  constructor(props: TError) {
-    super(props);
-  }
-
+  private color = this.props.color ?? TColor.red;
+  
   render(): ReactNode {
     return (
-      <div className="flex bg-red-500 font-mon pl-2 text-white content-center justify-center">
+      <div className={`flex bg-${this.color}-500 font-mon pl-2 text-white content-center justify-center`}>
         {this.props.error}
       </div>
     );

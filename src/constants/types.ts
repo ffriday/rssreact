@@ -16,10 +16,16 @@ export type TAstroObjectList = {
 
 export type TError = {
   error: string;
+  color?: TColor,
 };
 
 export enum LSKey {
   lastSearch = 'lastSearch',
+}
+
+export enum TColor {
+  red = 'red',
+  lime = 'lime',
 }
 
 export enum TErrorInfo {

@@ -34,6 +34,7 @@ export default class Search extends Component<TSearch> {
           onChange={(e) => this.setState({ currentSearch: e.target.value })}
           placeholder="Type something"
           className="flex h-6 sm:h-7 content-center justify-center flex-wrap rounded mt-1"
+          type='search'
         ></input>
         <button
           onClick={this.search}
