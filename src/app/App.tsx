@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import Search from './search/Search';
-import AstroObjectList from './content/AstroObjectList';
-import { TAstromicalObject, TColor, TErrorInfo } from './constants/types';
-import { apiSearchRequest, loadLastSearch } from './helpers/helpers';
-import ErrorBox from './errorBox/error';
+import Search from '../search/Search';
+import AstroObjectList from '../content/AstroObjectList';
+import { TAstromicalObject, TColor, TErrorInfo } from '../constants/types';
+import { apiSearchRequest, loadLastSearch } from '../helpers/helpers';
+import ErrorBox from '../errorBox/error';
+import { useHandleLoad } from '../hooks/useHandleLoad';
 
 type TBodyResponse = {
   astronomicalObjects: TAstromicalObject[];
@@ -15,28 +16,28 @@ export default function App(): JSX.Element {
   const [AstromicalObject, setAstromicalObject] = useState<TAstromicalObject[]>(
     []
   );
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [handleLoad, setHandleLoad] = useHandleLoad();
 
   useEffect(() => {
     (async () => await search(lastSearch))();
   }, [lastSearch]);
 
   const search = async (value: string) => {
-    console.log('search');
-    setError('');
-    setLoading(true);
+    setHandleLoad(true, '');
     try {
       const res = await apiSearchRequest(value, 50);
       if (res.ok) {
         const { astronomicalObjects }: TBodyResponse = await res.json();
         setAstromicalObject(astronomicalObjects);
-        if (!astronomicalObjects.length) setError(TErrorInfo.empty);
+        if (!astronomicalObjects.length) {
+          setHandleLoad(false, TErrorInfo.empty);
+        } else {
+          setHandleLoad(false);
+        }
       }
     } catch (error) {
-      if (error instanceof Error) setError(error.message);
+      if (error instanceof Error) setHandleLoad(false, error.message);
     }
-    setLoading(false);
   };
 
   const fakeError = () => {
@@ -45,11 +46,12 @@ export default function App(): JSX.Element {
         throw new Error('Test error');
       }
     } catch (error) {
-      if (error instanceof Error) setError(error.message);
+      if (error instanceof Error) setHandleLoad(false, error.message);
     }
   };
 
-  if (error && error !== TErrorInfo.empty) throw new Error('Test error');
+  if (handleLoad.hasError && handleLoad.hasError !== TErrorInfo.empty)
+    throw new Error('Test error');
 
   return (
     <main className="flex flex-col justify-top h-full bg-gray-700 font-mono">
@@ -66,9 +68,11 @@ export default function App(): JSX.Element {
         </button>
       </nav>
       <section className="h-auto bg-gray-700">
-        {loading && <ErrorBox error="Loading..." color={TColor.lime} />}
-        {error ? (
-          <ErrorBox error={error} color={TColor.red} />
+        {handleLoad.isLoading && (
+          <ErrorBox error="Loading..." color={TColor.lime} />
+        )}
+        {handleLoad.hasError ? (
+          <ErrorBox error={handleLoad.hasError} color={TColor.red} />
         ) : (
           <AstroObjectList AstromicalObject={AstromicalObject} />
         )}
