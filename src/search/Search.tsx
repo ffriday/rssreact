@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { useState } from 'react';
 import { LSKey } from '../constants/types';
 
 type TSearch = {
@@ -6,45 +6,35 @@ type TSearch = {
   searchHandler: (value: string) => void;
 };
 
-export default class Search extends Component<TSearch> {
-  constructor(props: TSearch) {
-    super(props);
-  }
+export default function Search({
+  defaultValue,
+  searchHandler,
+}: TSearch): JSX.Element {
+  const [currentSearch, setCurrentSearch] = useState(defaultValue);
 
-  loadLastSearch = (): string =>
-    window.localStorage.getItem(LSKey.lastSearch) ?? '';
-
-  search = (): void => {
-    window.localStorage.setItem(LSKey.lastSearch, this.state.currentSearch);
-    this.props.searchHandler(this.state.currentSearch);
+  const search = (): void => {
+    window.localStorage.setItem(LSKey.lastSearch, currentSearch);
+    searchHandler(currentSearch);
   };
 
-  state = {
-    currentSearch: this.props.defaultValue,
-  };
-
-  render(): ReactNode {
-    return (
-      <>
-        <input
-          onKeyUp={(e) => {
-            if (e.key === 'Enter') this.search();
-          }}
-          value={this.state.currentSearch}
-          onChange={(e) =>
-            this.setState({ currentSearch: e.target.value.trim() })
-          }
-          placeholder="Type something"
-          className="flex h-6 sm:h-7 content-center justify-center flex-wrap rounded mt-1"
-          type="search"
-        ></input>
-        <button
-          onClick={this.search}
-          className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5 mt-1"
-        >
-          Search
-        </button>
-      </>
-    );
-  }
+  return (
+    <>
+      <input
+        onKeyUp={(e) => {
+          if (e.key === 'Enter') search();
+        }}
+        value={currentSearch}
+        onChange={(e) => setCurrentSearch(e.target.value.trim())}
+        placeholder="Type something"
+        className="flex h-6 sm:h-7 content-center justify-center flex-wrap rounded mt-1"
+        type="search"
+      ></input>
+      <button
+        onClick={search}
+        className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-5 mt-1"
+      >
+        Search
+      </button>
+    </>
+  );
 }
