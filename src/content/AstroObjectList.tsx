@@ -18,8 +18,6 @@ export default function AstroObjectList(): JSX.Element {
     message = `${error.status} ${error.statusText}`;
   } else if (error instanceof Error) {
     message = error.message;
-  } else {
-    throw new Error('Uncaught Error');
   }
 
   return (
