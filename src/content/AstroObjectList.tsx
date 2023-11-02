@@ -1,21 +1,38 @@
-import { useLoaderData, useAsyncValue, Await } from 'react-router-dom';
+import {
+  useLoaderData,
+  useAsyncValue,
+  Await,
+  useRouteError,
+  isRouteErrorResponse,
+} from 'react-router-dom';
 import { Suspense } from 'react';
-import { TSearchResponse } from '../constants/types';
+import { MessageType, TSearchResponse } from '../constants/types';
 import AstroObject from './AstroObject';
 import MessageBox from '../messageBox/messageBox';
 
 export default function AstroObjectList(): JSX.Element {
   const { data } = useLoaderData() as { data: Promise<TSearchResponse> };
-  // const error = useRouteError();
+  const error = useRouteError();
+  let message = '';
+  if (isRouteErrorResponse(error)) {
+    message = `${error.status} ${error.statusText}`;
+  } else if (error instanceof Error) {
+    message = error.message;
+  } else {
+    throw new Error('Uncaught Error');
+  }
 
   return (
-    <Suspense fallback={<MessageBox message="Loading..." />}>
-      <Await resolve={data}>
-        <ul className="flex flex-col gap-1 mx-2">
-          <ObjectList />
-        </ul>
-      </Await>
-    </Suspense>
+    <>
+      {message && <MessageBox message={message} type={MessageType.error} />}
+      <Suspense fallback={<MessageBox message="Loading..." />}>
+        <Await resolve={data}>
+          <ul className="flex flex-col gap-1 mx-2">
+            <ObjectList />
+          </ul>
+        </Await>
+      </Suspense>
+    </>
   );
 }
 

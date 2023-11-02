@@ -36,7 +36,7 @@ export type TAstroObjectList = {
 
 export type TMessage = {
   message: string;
-  color?: MessageType;
+  type?: MessageType;
 };
 
 export type TSearchParams = {
