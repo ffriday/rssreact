@@ -56,13 +56,13 @@ export default function App(): JSX.Element {
   return (
     <main className="flex flex-col justify-top h-full bg-gray-700 font-mono">
       <nav className="h-15 sm:h-10 flex flex-row flex-wrap content-center justify-start pb-2">
-        <h1 className="text-xl sm:text-2xl w-screen sm:w-max sm:pr-10 font-bold text-red-400 text-left">
+        <h1 className="text-xl sm:text-2xl w-screen sm:w-max sm:pr-10 font-bold text-red-400 text-left ml-2">
           RSS Astro Objects
         </h1>
         <Search searchHandler={search} defaultValue={lastSearch} />
         <button
           onClick={fakeError}
-          className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-5 mt-1"
+          className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded ml-3 mt-1"
         >
           Error
         </button>
