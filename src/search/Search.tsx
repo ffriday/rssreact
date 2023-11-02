@@ -1,20 +1,18 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LSKey } from '../constants/types';
 
 type TSearch = {
   defaultValue: string;
-  searchHandler: (value: string) => void;
 };
 
-export default function Search({
-  defaultValue,
-  searchHandler,
-}: TSearch): JSX.Element {
+export default function Search({ defaultValue }: TSearch): JSX.Element {
   const [currentSearch, setCurrentSearch] = useState(defaultValue);
+  const navigate = useNavigate();
 
   const search = (): void => {
-    window.localStorage.setItem(LSKey.lastSearch, currentSearch);
-    searchHandler(currentSearch);
+    window.localStorage.setItem(LSKey.lastSearch, currentSearch.trim());
+    navigate(currentSearch.trim());
   };
 
   return (
@@ -24,7 +22,7 @@ export default function Search({
           if (e.key === 'Enter') search();
         }}
         value={currentSearch}
-        onChange={(e) => setCurrentSearch(e.target.value.trim())}
+        onChange={(e) => setCurrentSearch(e.target.value)}
         placeholder="Type something"
         className="flex h-6 sm:h-7 ml-2 sm:ml-0 content-center justify-center flex-wrap rounded mt-1"
         type="search"

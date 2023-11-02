@@ -3,7 +3,7 @@ import Search from '../search/Search';
 import AstroObjectList from '../content/AstroObjectList';
 import { TAstromicalObject, TColor, TErrorInfo } from '../constants/types';
 import { apiSearchRequest, loadLastSearch } from '../helpers/helpers';
-import ErrorBox from '../errorBox/error';
+import ErrorBox from '../messageBox/messageBox';
 import { useHandleLoad } from '../hooks/useHandleLoad';
 
 type TBodyResponse = {
