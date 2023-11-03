@@ -18,6 +18,10 @@ export type TSingleAstronomicalObject = TAstronomicalBaseObject & {
   astronomicalObjects: TAstronomicalObject[];
 };
 
+export type WrappedAstroObject = {
+  astronomicalObject: TSingleAstronomicalObject;
+};
+
 export type TSearchParams = {
   query: string;
   pageNumber?: number;
@@ -64,8 +68,8 @@ export enum LSKey {
 }
 
 export enum MessageType {
-  error = 'red',
-  info = 'lime',
+  error = 'bg-red-500',
+  info = 'bg-lime-500',
 }
 
 export enum TErrorInfo {
@@ -78,6 +82,6 @@ export enum QueryParams {
   query = 'query',
   pageNumber = 'pageNumber',
   pageSize = 'pageSize',
-  defaultPageSize = '10',
+  defaultPageSize = '8',
   uid = 'uid',
 }

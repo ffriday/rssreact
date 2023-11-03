@@ -4,7 +4,12 @@ import {
   isRouteErrorResponse,
 } from 'react-router-dom';
 import { apiEnv } from '../constants/env';
-import { LSKey, QueryParams } from '../constants/types';
+import {
+  LSKey,
+  QueryParams,
+  TSearchResponse,
+  WrappedAstroObject,
+} from '../constants/types';
 
 export const initialSearchContextState = {
   queryParams: {
@@ -26,7 +31,7 @@ const apiLoadSearch = async (
   query: string,
   page?: string | undefined,
   size?: string | undefined
-) => {
+): Promise<TSearchResponse> => {
   const pageNumber = page ? `&pageNumber=${page}` : '';
   const pageSize = size
     ? `&pageSize=${size}`
@@ -40,7 +45,7 @@ const apiLoadSearch = async (
   }).then((data) => data.json());
 };
 
-const apiLoadItem = async (uid: string) => {
+const apiLoadItem = async (uid: string): Promise<WrappedAstroObject> => {
   const url = `${apiEnv.url}${apiEnv.endpoint}?uid=${uid}`;
   return fetch(url, {
     method: 'GET',
@@ -57,9 +62,11 @@ export const apiLoadData = async ({ params, request }: LoaderFunctionArgs) => {
     params[QueryParams.pageNumber],
     params[QueryParams.pageSize]
   );
-  let item = {};
-  if (uid) item = apiLoadItem(uid);
-  return defer({ list: search, item: item });
+  if (uid) {
+    return defer({ list: search, item: apiLoadItem(uid) });
+  } else {
+    return defer({ list: search });
+  }
 };
 
 export const getErrorMessage = (error: unknown) => {

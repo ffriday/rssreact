@@ -18,9 +18,9 @@ export default function AstroObjectList(): JSX.Element {
   };
 
   return (
-    <section className="flex flex-col flex-grow w-1/2">
+    <section className="flex flex-col w-full mx-2">
       {!page.totalElements && <MessageBox message="NoResults" />}
-      <ul className="flex flex-col gap-1 mx-2">
+      <ul className="flex flex-col gap-1">
         {astronomicalObjects.map((element) => (
           <AstroObjectElement
             key={element.uid}
