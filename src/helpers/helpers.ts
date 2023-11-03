@@ -6,6 +6,19 @@ import {
 import { apiEnv } from '../constants/env';
 import { LSKey, QueryParams } from '../constants/types';
 
+export const initialSearchContextState = {
+  queryParams: {
+    firstPage: false,
+    lastPage: false,
+    numberOfElements: 0,
+    pageNumber: 0,
+    pageSize: 0,
+    totalElements: 0,
+    totalPages: 0,
+  },
+  uid: '',
+};
+
 export const loadLastSearch = (): string =>
   window.localStorage.getItem(LSKey.lastSearch) ?? '';
 
@@ -15,7 +28,7 @@ export const apiSearchRequest = async ({ params }: LoaderFunctionArgs) => {
     : '';
   const size = params[QueryParams.pageSize]
     ? `&pageSize=${params[QueryParams.pageSize]}`
-    : '';
+    : `&pageSize=${QueryParams.defaultPageSize}`;
   const uri = `${apiEnv.url}${apiEnv.endpoint}?name=${
     params[QueryParams.query]
   }${size}${number}`;

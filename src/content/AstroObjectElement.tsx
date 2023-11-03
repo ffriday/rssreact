@@ -1,6 +1,6 @@
 import { TAstronomicalObject } from '../constants/types';
 
-export default function AstroObject({
+export default function AstroObjectElement({
   astronomicalObjectType,
   name,
   location,

@@ -10,6 +10,12 @@ export type TAstronomicalObject = {
   location: TAstronomicalLocation;
 };
 
+export type TSearchParams = {
+  query: string;
+  pageNumber?: number;
+  pageSize?: number;
+};
+
 export type TSearchPage = {
   firstPage: boolean;
   lastPage: boolean;
@@ -18,6 +24,11 @@ export type TSearchPage = {
   pageSize: number;
   totalElements: number;
   totalPages: number;
+};
+
+export type TSearchContext = {
+  queryParams: TSearchPage;
+  uid: string;
 };
 
 export type TSort = {
@@ -39,12 +50,6 @@ export type TMessage = {
   type?: MessageType;
 };
 
-export type TSearchParams = {
-  query: string;
-  pageNumber?: number;
-  pageSize?: number;
-};
-
 export enum LSKey {
   lastSearch = 'lastSearch',
 }
@@ -56,10 +61,13 @@ export enum MessageType {
 
 export enum TErrorInfo {
   empty = 'No Results',
+  sorry = 'Sorry.. there was an error',
+  testError = 'Test error',
 }
 
 export enum QueryParams {
   query = 'query',
   pageNumber = 'pageNumber',
   pageSize = 'pageSize',
+  defaultPageSize = '10',
 }
