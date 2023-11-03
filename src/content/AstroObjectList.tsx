@@ -4,10 +4,11 @@ import AstroObjectElement from './AstroObjectElement';
 import { TSearchResponse } from '../constants/types';
 import { useState } from 'react';
 
-export function AstroObjectList(): JSX.Element {
+export default function AstroObjectList(): JSX.Element {
   const { astronomicalObjects, page } = useAsyncValue() as TSearchResponse;
   const [selectedUid, setSelectedUid] = useState('');
   const selectUid = (uid: string) => setSelectedUid(uid);
+
   return (
     <>
       {!page.totalElements && <MessageBox message="NoResults" />}
