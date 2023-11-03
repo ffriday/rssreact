@@ -15,6 +15,7 @@ export type TAstronomicalObject = TAstronomicalBaseObject & {
 
 export type TSingleAstronomicalObject = TAstronomicalBaseObject & {
   location: TAstronomicalObject;
+  astronomicalObjects: TAstronomicalObject[];
 };
 
 export type TSearchParams = {

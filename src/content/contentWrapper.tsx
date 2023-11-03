@@ -17,9 +17,7 @@ export default function ContentWrapper<T>({
     <>
       {message && <MessageBox message={message} type={MessageType.error} />}
       <Suspense fallback={<MessageBox message="Loading..." />}>
-        <Await resolve={data}>
-          <ul className="flex flex-col gap-1 mx-2 flex-grow">{content}</ul>
-        </Await>
+        <Await resolve={data}>{content}</Await>
       </Suspense>
     </>
   );

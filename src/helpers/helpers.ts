@@ -50,14 +50,15 @@ const apiLoadItem = async (uid: string) => {
   }).then((data) => data.json());
 };
 
-export const apiLoadData = async ({ params }: LoaderFunctionArgs) => {
+export const apiLoadData = async ({ params, request }: LoaderFunctionArgs) => {
+  const uid = new URL(request.url).searchParams.get(QueryParams.uid);
   const search = apiLoadSearch(
     params[QueryParams.query] || '',
     params[QueryParams.pageNumber],
     params[QueryParams.pageSize]
   );
   let item = {};
-  if (params[QueryParams.uid]) item = apiLoadItem(params[QueryParams.uid]);
+  if (uid) item = apiLoadItem(uid);
   return defer({ list: search, item: item });
 };
 
