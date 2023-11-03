@@ -1,4 +1,5 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
+import ErrorMessage from './errorMessage';
 
 type TProps = {
   children?: ReactNode;
@@ -29,14 +30,7 @@ export default class ErrorBoundary extends Component<TProps, TState> {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <div className="flex justify-center flex-col gap-4 content-center h-full bg-gray-700 font-mono text-xl">
-          <h1 className="text-center">Sorry.. there was an error</h1>
-          <a href="/" className="text-center text-red-950">
-            Back to main page
-          </a>
-        </div>
-      );
+      return <ErrorMessage />;
     }
 
     return this.props.children;
