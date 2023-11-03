@@ -3,22 +3,16 @@ import {
   useAsyncValue,
   Await,
   useRouteError,
-  isRouteErrorResponse,
 } from 'react-router-dom';
 import { Suspense } from 'react';
 import { MessageType, TSearchResponse } from '../constants/types';
 import AstroObject from './AstroObject';
 import MessageBox from '../messageBox/messageBox';
+import { getErrorMessage } from '../helpers/helpers';
 
 export default function AstroObjectList(): JSX.Element {
   const { data } = useLoaderData() as { data: Promise<TSearchResponse> };
-  const error = useRouteError();
-  let message = '';
-  if (isRouteErrorResponse(error)) {
-    message = `${error.status} ${error.statusText}`;
-  } else if (error instanceof Error) {
-    message = error.message;
-  }
+  const message = getErrorMessage(useRouteError());
 
   return (
     <>

@@ -1,4 +1,8 @@
-import { LoaderFunctionArgs, defer } from 'react-router-dom';
+import {
+  LoaderFunctionArgs,
+  defer,
+  isRouteErrorResponse,
+} from 'react-router-dom';
 import { apiEnv } from '../constants/env';
 import { LSKey, QueryParams } from '../constants/types';
 
@@ -23,4 +27,14 @@ export const apiSearchRequest = async ({ params }: LoaderFunctionArgs) => {
     },
   }).then((data) => data.json());
   return defer({ data: res });
+};
+
+export const getErrorMessage = (error: unknown) => {
+  let message = '';
+  if (isRouteErrorResponse(error)) {
+    message = `${error.status} ${error.statusText}`;
+  } else if (error instanceof Error) {
+    message = error.message;
+  }
+  return message;
 };

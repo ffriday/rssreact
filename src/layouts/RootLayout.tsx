@@ -19,7 +19,7 @@ export default function RootLayout(): JSX.Element {
           </button>
         </nav>
       </header>
-      <main>
+      <main className="bg-gray-700">
         <Outlet />
       </main>
     </div>
