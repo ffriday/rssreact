@@ -41,9 +41,9 @@ const apiLoadSearch = async (
 };
 
 const apiLoadItem = async (uid: string) => {
-  const url = `${apiEnv.url}${apiEnv.endpoint}?${uid}`;
+  const url = `${apiEnv.url}${apiEnv.endpoint}?uid=${uid}`;
   return fetch(url, {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },

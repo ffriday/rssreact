@@ -1,3 +1,7 @@
-export default function Pagination(): JSX.Element {
-  return <></>;
+import { TSearchPage } from '../constants/types';
+
+export default function Pagination({
+  numberOfElements,
+}: TSearchPage): JSX.Element {
+  return <>{numberOfElements}</>;
 }

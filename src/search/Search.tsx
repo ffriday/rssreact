@@ -12,7 +12,7 @@ export default function Search({ defaultValue }: TSearch): JSX.Element {
 
   const search = (): void => {
     window.localStorage.setItem(LSKey.lastSearch, currentSearch.trim());
-    navigate(currentSearch.trim());
+    navigate(`0/${currentSearch.trim()}`);
   };
 
   return (

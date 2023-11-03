@@ -40,7 +40,7 @@ export default function RootLayout(): JSX.Element {
             </button>
           </nav>
         </header>
-        <main className="bg-gray-700">
+        <main className="bg-gray-700 flex flex-row w-full">
           <Outlet />
         </main>
       </div>

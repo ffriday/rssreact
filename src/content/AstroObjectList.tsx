@@ -1,13 +1,23 @@
-import { useAsyncValue } from 'react-router-dom';
+import { useAsyncValue, useSearchParams } from 'react-router-dom';
 import MessageBox from '../messageBox/messageBox';
 import AstroObjectElement from './AstroObjectElement';
 import { TSearchResponse } from '../constants/types';
 import { useState } from 'react';
+import Pagination from '../pagination/pagination';
 
 export default function AstroObjectList(): JSX.Element {
   const { astronomicalObjects, page } = useAsyncValue() as TSearchResponse;
   const [selectedUid, setSelectedUid] = useState('');
-  const selectUid = (uid: string) => setSelectedUid(uid);
+  // const navigate = useNavigate();
+  const [, setSearchParams] = useSearchParams();
+
+  const selectUid = (uid: string) => {
+    if (uid) {
+      setSelectedUid(uid);
+      // navigate(`../${uid}`, { relative: "path" });
+      setSearchParams({ uid });
+    }
+  };
 
   return (
     <>
@@ -20,6 +30,7 @@ export default function AstroObjectList(): JSX.Element {
           isSelected={element.uid === selectedUid}
         />
       ))}
+      <Pagination {...page} />
     </>
   );
 }
