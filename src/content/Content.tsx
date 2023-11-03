@@ -1,8 +1,7 @@
 import { useLoaderData } from 'react-router-dom';
-// import AstroObjectList from './AstroObjectList';
 import { TSearchResponse, TSingleAstronomicalObject } from '../constants/types';
 import ContentWrapper from './contentWrapper';
-import { ObjectList } from './AstroObjectList';
+import { AstroObjectList } from './AstroObjectList';
 
 export default function Content(): JSX.Element {
   const { list, item } = useLoaderData() as {
@@ -13,8 +12,7 @@ export default function Content(): JSX.Element {
 
   return (
     <>
-      {/* <AstroObjectList list={list}/> */}
-      <ContentWrapper data={list} content={<ObjectList />} />
+      <ContentWrapper data={list} content={<AstroObjectList />} />
     </>
   );
 }
