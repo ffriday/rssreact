@@ -22,24 +22,43 @@ export const initialSearchContextState = {
 export const loadLastSearch = (): string =>
   window.localStorage.getItem(LSKey.lastSearch) ?? '';
 
-export const apiSearchRequest = async ({ params }: LoaderFunctionArgs) => {
-  const number = params[QueryParams.pageNumber]
-    ? `&pageNumber=${params[QueryParams.pageNumber]}`
-    : '';
-  const size = params[QueryParams.pageSize]
-    ? `&pageSize=${params[QueryParams.pageSize]}`
+const apiLoadSearch = async (
+  query: string,
+  page?: string | undefined,
+  size?: string | undefined
+) => {
+  const pageNumber = page ? `&pageNumber=${page}` : '';
+  const pageSize = size
+    ? `&pageSize=${size}`
     : `&pageSize=${QueryParams.defaultPageSize}`;
-  const uri = `${apiEnv.url}${apiEnv.endpoint}?name=${
-    params[QueryParams.query]
-  }${size}${number}`;
-
-  const res = fetch(uri, {
+  const url = `${apiEnv.url}${apiEnv.endpoint}${apiEnv.search}?name=${query}${pageSize}${pageNumber}`;
+  return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   }).then((data) => data.json());
-  return defer({ data: res });
+};
+
+const apiLoadItem = async (uid: string) => {
+  const url = `${apiEnv.url}${apiEnv.endpoint}?${uid}`;
+  return fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  }).then((data) => data.json());
+};
+
+export const apiLoadData = async ({ params }: LoaderFunctionArgs) => {
+  const search = apiLoadSearch(
+    params[QueryParams.query] || '',
+    params[QueryParams.pageNumber],
+    params[QueryParams.pageSize]
+  );
+  let item = {};
+  if (params[QueryParams.uid]) item = apiLoadItem(params[QueryParams.uid]);
+  return defer({ list: search, item: item });
 };
 
 export const getErrorMessage = (error: unknown) => {

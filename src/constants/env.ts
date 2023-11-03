@@ -1,4 +1,5 @@
 export enum apiEnv {
   url = 'https://stapi.co/api',
-  endpoint = '/v2/rest/astronomicalObject/search',
+  endpoint = '/v2/rest/astronomicalObject/',
+  search = 'search',
 }

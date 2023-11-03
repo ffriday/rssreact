@@ -3,17 +3,25 @@ export type TAstronomicalLocation = {
   uid: string;
 };
 
-export type TAstronomicalObject = {
+type TAstronomicalBaseObject = {
   astronomicalObjectType: string;
   name: string;
   uid: string;
+};
+
+export type TAstronomicalObject = TAstronomicalBaseObject & {
   location: TAstronomicalLocation;
+};
+
+export type TSingleAstronomicalObject = TAstronomicalBaseObject & {
+  location: TAstronomicalObject;
 };
 
 export type TSearchParams = {
   query: string;
   pageNumber?: number;
   pageSize?: number;
+  uid?: string;
 };
 
 export type TSearchPage = {
@@ -70,4 +78,5 @@ export enum QueryParams {
   pageNumber = 'pageNumber',
   pageSize = 'pageSize',
   defaultPageSize = '10',
+  uid = 'uid',
 }
