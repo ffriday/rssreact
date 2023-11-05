@@ -1,2 +1,1 @@
-# RSSReact
-RSSchool React Task
+# RSSchool React course app
