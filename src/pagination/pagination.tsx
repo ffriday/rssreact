@@ -16,6 +16,7 @@ export default function Pagination({
   return (
     <nav className="flex flex-row text-white p-2 items-center justify-center">
       <Link
+        onClick={(event) => event.stopPropagation()}
         className={`p-2 select-none ${firstPage ? 'pointer-events-none' : ''}`}
         to={`/${back}/${query ?? ''}${params}`}
       >
@@ -23,6 +24,7 @@ export default function Pagination({
       </Link>
       <p className="p-2">{pageNumber + 1}</p>
       <Link
+        onClick={(event) => event.stopPropagation()}
         className={`p-2 select-none ${lastPage ? 'pointer-events-none' : ''}`}
         to={`/${forward}/${query ?? ''}${params}`}
       >
