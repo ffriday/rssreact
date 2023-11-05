@@ -1,5 +1,6 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
 import ErrorMessage from './errorMessage';
+import { TErrorInfo } from '../constants/types';
 
 type TProps = {
   children?: ReactNode;
@@ -30,7 +31,7 @@ export default class ErrorBoundary extends Component<TProps, TState> {
 
   render() {
     if (this.state.hasError) {
-      return <ErrorMessage />;
+      return <ErrorMessage message={TErrorInfo.sorry} />;
     }
 
     return this.props.children;

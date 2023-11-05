@@ -6,13 +6,17 @@ import {
 } from 'react-router-dom';
 import RootLayout from '../layouts/RootLayout';
 import { apiLoadData } from '../helpers/helpers';
-import { LSKey, QueryParams } from '../constants/types';
+import { LSKey, QueryParams, TErrorInfo } from '../constants/types';
 import ErrorMessage from '../errorBoundary/errorMessage';
 import Content from '../content/Content';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<RootLayout />} errorElement={<ErrorMessage />}>
+    <Route
+      path="/"
+      element={<RootLayout />}
+      errorElement={<ErrorMessage message={TErrorInfo.sorry} />}
+    >
       <Route
         index
         element={
@@ -23,9 +27,14 @@ export const router = createBrowserRouter(
         errorElement={<Content />}
       />
       <Route
-        path={`/:${QueryParams.pageNumber}/:${QueryParams.query}?/:${QueryParams.uid}?`}
+        path={`/:${QueryParams.pageNumber}/:${QueryParams.query}?`}
         element={<Content />}
         loader={apiLoadData}
+        errorElement={<Content />}
+      />
+      <Route
+        path="/*"
+        element={<ErrorMessage message={TErrorInfo.notFound} />}
         errorElement={<Content />}
       />
     </Route>
