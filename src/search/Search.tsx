@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LSKey } from '../constants/types';
+import { LSKey, QueryParams } from '../constants/types';
+import { SearchContext } from '../layouts/RootLayout';
 
 type TSearch = {
   defaultValue: string;
@@ -8,11 +9,14 @@ type TSearch = {
 
 export default function Search({ defaultValue }: TSearch): JSX.Element {
   const [currentSearch, setCurrentSearch] = useState(defaultValue);
+  const { state } = useContext(SearchContext);
   const navigate = useNavigate();
 
   const search = (): void => {
     window.localStorage.setItem(LSKey.lastSearch, currentSearch.trim());
-    navigate(`0/${currentSearch.trim()}`);
+    navigate(
+      `0/${currentSearch.trim()}?${QueryParams.pageSize}=${state.itemsPerPage}`
+    );
   };
 
   return (

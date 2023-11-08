@@ -42,6 +42,12 @@ export type TSearchPage = {
 export type TSearchContext = {
   queryParams: TSearchPage;
   uid: string;
+  itemsPerPage: number;
+};
+
+export type TAppState = {
+  state: TSearchContext;
+  updateState: (newState: Partial<TSearchContext>) => void;
 };
 
 export type TSort = {

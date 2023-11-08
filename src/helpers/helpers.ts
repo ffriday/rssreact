@@ -7,11 +7,12 @@ import { apiEnv } from '../constants/env';
 import {
   LSKey,
   QueryParams,
+  TSearchContext,
   TSearchResponse,
   WrappedAstroObject,
 } from '../constants/types';
 
-export const initialSearchContextState = {
+export const initialSearchContextState: TSearchContext = {
   queryParams: {
     firstPage: false,
     lastPage: false,
@@ -22,6 +23,7 @@ export const initialSearchContextState = {
     totalPages: 0,
   },
   uid: '',
+  itemsPerPage: 10,
 };
 
 export const loadLastSearch = (): string =>
@@ -30,7 +32,7 @@ export const loadLastSearch = (): string =>
 const apiLoadSearch = async (
   query: string,
   page?: string | undefined,
-  size?: string | undefined
+  size?: string | undefined | null
 ): Promise<TSearchResponse> => {
   const pageNumber = page ? `&pageNumber=${page}` : '';
   const pageSize = size
@@ -57,10 +59,13 @@ const apiLoadItem = async (uid: string): Promise<WrappedAstroObject> => {
 
 export const apiLoadData = async ({ params, request }: LoaderFunctionArgs) => {
   const uid = new URL(request.url).searchParams.get(QueryParams.uid);
+  const itemsPerPage = new URL(request.url).searchParams.get(
+    QueryParams.pageSize
+  );
   const search = apiLoadSearch(
     params[QueryParams.query] || '',
     params[QueryParams.pageNumber],
-    params[QueryParams.pageSize]
+    itemsPerPage
   );
   if (uid) {
     return defer({ list: search, item: apiLoadItem(uid) });

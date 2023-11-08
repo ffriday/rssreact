@@ -1,5 +1,8 @@
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { QueryParams, TSearchPage } from '../constants/types';
+import { useContext } from 'react';
+import { SearchContext } from '../layouts/RootLayout';
+import { SelectPageSize } from './selectPageSize';
 
 export default function Pagination({
   firstPage,
@@ -8,8 +11,11 @@ export default function Pagination({
 }: TSearchPage): JSX.Element {
   const { query } = useParams();
   const [searchParams] = useSearchParams();
+  const { state } = useContext(SearchContext);
   const uid = searchParams.get(QueryParams.uid);
-  const params = uid ? `?${QueryParams.uid}=${uid}` : '';
+  const params = uid
+    ? `?${QueryParams.pageSize}=${state.itemsPerPage}&${QueryParams.uid}=${uid}`
+    : '';
   const back = firstPage ? pageNumber : pageNumber - 1;
   const forward = lastPage ? pageNumber : pageNumber + 1;
 
@@ -30,6 +36,7 @@ export default function Pagination({
       >
         {'->'}
       </Link>
+      <SelectPageSize />
     </nav>
   );
 }
