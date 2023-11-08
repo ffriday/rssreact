@@ -12,7 +12,7 @@ import {
   WrappedAstroObject,
 } from '../constants/types';
 
-export const initialSearchContextState: TSearchContext = {
+export const initialSearchContextState = (): TSearchContext => ({
   queryParams: {
     firstPage: false,
     lastPage: false,
@@ -23,8 +23,8 @@ export const initialSearchContextState: TSearchContext = {
     totalPages: 0,
   },
   uid: '',
-  itemsPerPage: 10,
-};
+  itemsPerPage: Number(window.localStorage.getItem(LSKey.pageSize)) || 10,
+});
 
 export const loadLastSearch = (): string =>
   window.localStorage.getItem(LSKey.lastSearch) ?? '';

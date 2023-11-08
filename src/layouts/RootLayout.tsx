@@ -5,7 +5,7 @@ import { initialSearchContextState, loadLastSearch } from '../helpers/helpers';
 import { TAppState, TErrorInfo, TSearchContext } from '../constants/types';
 
 export const SearchContext = createContext<TAppState>({
-  state: initialSearchContextState,
+  state: initialSearchContextState(),
   updateState: (newState: Partial<TSearchContext>) => {
     newState;
   },

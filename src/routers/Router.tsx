@@ -21,7 +21,12 @@ export const router = createBrowserRouter(
         index
         element={
           <Navigate
-            to={`/0/${window.localStorage.getItem(LSKey.lastSearch) || ''}`}
+            to={`/0/${window.localStorage.getItem(LSKey.lastSearch) || ''}?${
+              QueryParams.pageSize
+            }=${
+              window.localStorage.getItem(LSKey.pageSize) ||
+              QueryParams.defaultPageSize
+            }`}
           />
         }
         errorElement={<Content />}

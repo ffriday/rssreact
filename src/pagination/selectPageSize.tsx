@@ -1,17 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { SearchContext } from '../layouts/RootLayout';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { LSKey, QueryParams } from '../constants/types';
 
 export function SelectPageSize(): JSX.Element {
   const { state, updateState } = useContext(SearchContext);
-  const [, setSearchParams] = useSearchParams();
-  const [selectSize] = useState(state.itemsPerPage.toString());
+  const navigate = useNavigate();
   const pageSizes = [5, 10, 20];
 
   const setContext = (size: number): void => {
-    updateState({ itemsPerPage: Number(size) });
-    setSearchParams({ pageSize: size.toString() });
+    updateState({ itemsPerPage: size });
+    window.localStorage.setItem(LSKey.pageSize, size.toString());
+    navigate(`/0/?${QueryParams.pageSize}=${size}`);
   };
 
   return (
@@ -33,11 +33,7 @@ export function SelectPageSize(): JSX.Element {
         }}
       >
         {pageSizes.map((size) => (
-          <option
-            key={`pageSize${size}`}
-            value={size}
-            // selected={size === context.itemsPerPage}
-          >
+          <option key={`pageSize${size}`} value={size}>
             {size}
           </option>
         ))}

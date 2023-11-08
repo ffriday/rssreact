@@ -21,7 +21,7 @@ export default function AstroObjectList(): JSX.Element {
 
   return (
     <section
-      onClick={() => setSearchParams({ uid: '' })}
+      onClick={() => selectUid('')}
       className="flex flex-col w-full mx-2"
     >
       {!page.totalElements && <MessageBox message="NoResults" />}

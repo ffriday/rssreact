@@ -15,7 +15,7 @@ export default function Pagination({
   const uid = searchParams.get(QueryParams.uid);
   const params = uid
     ? `?${QueryParams.pageSize}=${state.itemsPerPage}&${QueryParams.uid}=${uid}`
-    : '';
+    : `?${QueryParams.pageSize}=${state.itemsPerPage}`;
   const back = firstPage ? pageNumber : pageNumber - 1;
   const forward = lastPage ? pageNumber : pageNumber + 1;
 

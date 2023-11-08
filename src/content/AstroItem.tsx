@@ -5,6 +5,8 @@ import {
 } from 'react-router-dom';
 import { TAstronomicalObject, WrappedAstroObject } from '../constants/types';
 import MessageBox from '../messageBox/messageBox';
+import { useContext } from 'react';
+import { SearchContext } from '../layouts/RootLayout';
 
 export default function AstroItem(): JSX.Element {
   const astronomicalObject = useAsyncValue() as WrappedAstroObject;
@@ -76,9 +78,12 @@ function AstroNeighbours({ obj }: { obj: TAstronomicalObject[] }): JSX.Element {
 
 function CloseItemView(): JSX.Element {
   const [, setSearchParams] = useSearchParams();
+  const { state } = useContext(SearchContext);
   return (
     <button
-      onClick={() => setSearchParams({ uid: '' })}
+      onClick={() =>
+        setSearchParams({ uid: '', pageSize: state.itemsPerPage.toString() })
+      }
       className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-1"
     >
       Close

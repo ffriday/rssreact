@@ -71,6 +71,7 @@ export type TMessage = {
 
 export enum LSKey {
   lastSearch = 'lastSearch',
+  pageSize = 'pageSize',
 }
 
 export enum MessageType {
@@ -89,6 +90,6 @@ export enum QueryParams {
   query = 'query',
   pageNumber = 'pageNumber',
   pageSize = 'pageSize',
-  defaultPageSize = '8',
+  defaultPageSize = '10',
   uid = 'uid',
 }
