@@ -47,7 +47,9 @@ export type TSearchContext = {
 
 export type TAppState = {
   state: TSearchContext;
+  objectList: TAstronomicalObject[];
   updateState: (newState: Partial<TSearchContext>) => void;
+  addObjectList: (objectList: TAstronomicalObject[]) => void;
 };
 
 export type TSort = {

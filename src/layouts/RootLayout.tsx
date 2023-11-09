@@ -2,13 +2,22 @@ import { createContext, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Search from '../search/Search';
 import { initialSearchContextState, loadLastSearch } from '../helpers/helpers';
-import { TAppState, TErrorInfo, TSearchContext } from '../constants/types';
+import {
+  TAppState,
+  TAstronomicalObject,
+  TErrorInfo,
+  TSearchContext,
+} from '../constants/types';
 
 export const SearchContext = createContext<TAppState>({
   state: initialSearchContextState(),
   updateState: (newState: Partial<TSearchContext>) => {
     newState;
   },
+  addObjectList: (objectList: TAstronomicalObject[]) => {
+    objectList;
+  },
+  objectList: [],
 });
 
 export default function RootLayout(): JSX.Element {
@@ -16,9 +25,13 @@ export default function RootLayout(): JSX.Element {
   const [appState, setAppState] = useState<TSearchContext>(
     initialSearchContextState
   );
+  const [objectList, setObjectList] = useState<TAstronomicalObject[]>([]);
 
   const updateAppState = (newState: Partial<TSearchContext>): void =>
     setAppState({ ...appState, ...newState });
+
+  const addObjectList = (objectList: TAstronomicalObject[]): void =>
+    setObjectList(objectList);
 
   const fakeError = () => {
     try {
@@ -34,7 +47,12 @@ export default function RootLayout(): JSX.Element {
 
   return (
     <SearchContext.Provider
-      value={{ state: appState, updateState: updateAppState }}
+      value={{
+        state: appState,
+        objectList: objectList,
+        updateState: updateAppState,
+        addObjectList,
+      }}
     >
       <div className="flex flex-col justify-top h-full bg-gray-700 font-mono">
         <header className="flex flex-row flex-wrap">

@@ -2,15 +2,20 @@ import { useAsyncValue, useSearchParams } from 'react-router-dom';
 import MessageBox from '../messageBox/messageBox';
 import AstroObjectElement from './AstroObjectElement';
 import { TSearchResponse } from '../constants/types';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Pagination from '../pagination/pagination';
 import { SearchContext } from '../layouts/RootLayout';
 
 export default function AstroObjectList(): JSX.Element {
-  const { state } = useContext(SearchContext);
   const { astronomicalObjects, page } = useAsyncValue() as TSearchResponse;
+  const { state, addObjectList } = useContext(SearchContext);
   const [selectedUid, setSelectedUid] = useState('');
   const [, setSearchParams] = useSearchParams();
+
+  useEffect(
+    () => addObjectList(astronomicalObjects),
+    [astronomicalObjects, addObjectList]
+  );
 
   const selectUid = (uid: string) => {
     if (uid) {
