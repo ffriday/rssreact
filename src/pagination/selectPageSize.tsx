@@ -17,7 +17,7 @@ export function SelectPageSize(): JSX.Element {
   return (
     <>
       <label className="ml-2" htmlFor="pageSize">
-        Items:{' '}
+        Items:
       </label>
       <select
         className="text-black ml-1"

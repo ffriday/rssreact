@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, act } from '@testing-library/react';
 import Search from './Search';
 import { BrowserRouter } from 'react-router-dom';
 import { LSKey } from '../constants/types';
@@ -34,8 +34,10 @@ describe('Search component', () => {
     const searchButton = screen.getByRole('button');
     const input = screen.getByRole('searchbox');
 
-    fireEvent.change(input, { target: { value: valueForInput } });
-    fireEvent.click(searchButton);
+    act(() => {
+      fireEvent.change(input, { target: { value: valueForInput } });
+      fireEvent.click(searchButton);
+    });
 
     expect(screen.queryByDisplayValue(valueForInput)).not.toBeNull();
     expect(screen.queryByDisplayValue(valueForLS)).toBeNull();
