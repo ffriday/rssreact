@@ -1,12 +1,14 @@
-import { expect, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import ErrorMessage from './errorMessage';
 
 const testMessage = 'test-text';
 
-it('Renders', () => {
-  render(<ErrorMessage message={testMessage} />);
-  const message = screen.getByText(testMessage);
+describe('Error handlers', () => {
+  it('Error message renders', () => {
+    render(<ErrorMessage message={testMessage} />);
+    const message = screen.getByText(testMessage);
 
-  expect(message).not.toBeNull();
+    expect(message).not.toBeNull();
+  });
 });

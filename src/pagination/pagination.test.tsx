@@ -43,4 +43,14 @@ describe('Pagination', () => {
     });
     expect(location !== window.location.href).toBeTruthy();
   });
+
+  it('Not changing url on click', async () => {
+    location = window.location.href;
+    const sizeSelct = await screen.findByRole('combobox');
+
+    act(() => {
+      fireEvent.click(sizeSelct);
+    });
+    expect(location === window.location.href).toBeTruthy();
+  });
 });

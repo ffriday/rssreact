@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { setupServer } from 'msw/node';
 import {
   afterAll,
@@ -9,23 +8,14 @@ import {
   expect,
   it,
 } from 'vitest';
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '../routers/Router';
 import { handlers } from '../tests/mockHandlers';
-import { mockData } from '../tests/mockData';
 import { TErrorInfo } from '../constants/types';
 
-const cardNumber: 0 | 1 | 2 = 0;
-const { name, astronomicalObjectType, location } =
-  mockData.astronomicalObjects[cardNumber];
+const cardNumber: 0 | 1 | 2 = 1;
 
 const server = setupServer(...handlers);
 
