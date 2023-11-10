@@ -86,6 +86,7 @@ export enum TErrorInfo {
   sorry = 'Sorry.. there was an error',
   testError = 'Test error',
   notFound = '404 Page not found',
+  loading = 'Loading...',
 }
 
 export enum QueryParams {

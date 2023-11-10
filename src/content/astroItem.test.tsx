@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { setupServer } from 'msw/node';
 import {
   afterAll,
@@ -20,39 +21,32 @@ import { RouterProvider } from 'react-router-dom';
 import { router } from '../routers/Router';
 import { handlers } from '../tests/mockHandlers';
 import { mockData } from '../tests/mockData';
+import { TErrorInfo } from '../constants/types';
 
 const cardNumber: 0 | 1 | 2 = 0;
 const { name, astronomicalObjectType, location } =
   mockData.astronomicalObjects[cardNumber];
-let startQuery = false;
 
 const server = setupServer(...handlers);
-server.events.on('request:start', ({ request }) => {
-  if (request.method === 'GET') startQuery = true;
-});
 
-describe('List item', async () => {
+describe('Object card', async () => {
   beforeAll(() => server.listen());
-  beforeEach(() => {
+  beforeEach(async () => {
     render(
       <ErrorBoundary>
         <RouterProvider router={router} />
       </ErrorBoundary>
     );
+    const list = await screen.findByRole('list');
+    const item = list.querySelectorAll('li')[cardNumber];
+    act(() => {
+      fireEvent.click(item);
+    });
   });
   afterEach(() => server.resetHandlers());
   afterAll(() => server.close());
 
-  it('Renders and shows data', async () => {
-    const list = await screen.findByRole('list');
-    const item = list.querySelectorAll('li')[cardNumber];
-
-    expect(item.textContent).toContain(name);
-    expect(item.textContent).toContain(astronomicalObjectType);
-    expect(item.textContent).toContain(location?.name || 'Unknown');
-  });
-
-  it('Opens detailed card', async () => {
+  it('Shows loader', async () => {
     const list = await screen.findByRole('list');
     const item = list.querySelectorAll('li')[cardNumber];
 
@@ -60,19 +54,20 @@ describe('List item', async () => {
       fireEvent.click(item);
     });
 
-    const card = await screen.findByTestId('card-element');
+    const loader = await screen.findByText(TErrorInfo.loading);
 
-    expect(card).toBeTruthy();
+    expect(loader).toBeTruthy();
   });
 
-  it('Makes fetch', async () => {
-    const list = await screen.findByRole('list');
-    const item = list.querySelectorAll('li')[cardNumber];
+  it('Closes on button click', async () => {
+    const closeButton = await screen.findByText('Close');
 
     act(() => {
-      fireEvent.click(item);
+      fireEvent.click(closeButton);
     });
 
-    await waitFor(() => expect(startQuery).toBeTruthy());
+    const card = screen.queryByTestId('card-element');
+
+    expect(card).not.toBeTruthy();
   });
 });

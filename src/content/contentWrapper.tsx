@@ -1,6 +1,6 @@
 import { Await, useRouteError } from 'react-router-dom';
 import { ReactNode, Suspense } from 'react';
-import { MessageType } from '../constants/types';
+import { MessageType, TErrorInfo } from '../constants/types';
 import MessageBox from '../messageBox/messageBox';
 import { getErrorMessage } from '../helpers/helpers';
 
@@ -19,7 +19,7 @@ export default function ContentWrapper<T>({
       <Suspense
         fallback={
           <section className="flex flex-col w-full mx-2">
-            <MessageBox message="Loading..." />
+            <MessageBox message={TErrorInfo.loading} />
           </section>
         }
       >
