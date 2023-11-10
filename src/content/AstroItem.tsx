@@ -48,7 +48,10 @@ function AstroItemView({
   location,
 }: TAstronomicalObject): JSX.Element {
   return (
-    <div className="flex flex-col gap-1 bg-gray-600 font-mon text-white pl-2">
+    <div
+      data-testid="card-element"
+      className="flex flex-col gap-1 bg-gray-600 font-mon text-white pl-2"
+    >
       <h3>Name: {name}</h3>
       <p>Object type: {astronomicalObjectType}</p>
       <p>Location: {location ? location.name : 'Unknown'}</p>
