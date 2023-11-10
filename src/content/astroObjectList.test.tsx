@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import { apiEnv } from '../constants/env';
@@ -16,10 +15,11 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '../routers/Router';
-import { QueryParams } from '../constants/types';
+import { QueryParams, TErrorInfo } from '../constants/types';
 
 const endpoint = `${apiEnv.url}${apiEnv.endpoint}${apiEnv.search}`;
 const sizeArray = [5, 20];
+const query = 'NoResultsQuery';
 
 const handlers = http.post(endpoint, ({ request }) => {
   const url = new URL(request.url);
@@ -30,18 +30,33 @@ const handlers = http.post(endpoint, ({ request }) => {
     (_, i) => i < Number(pageSize)
   );
 
-  return HttpResponse.json({
-    astronomicalObjects: mock,
-    page: {
-      pageNumber: pageNumber,
-      pageSize: pageSize,
-      numberOfElements: 50,
-      totalElements: 2404,
-      totalPages: 49,
-      firstPage: true,
-      lastPage: false,
-    },
-  });
+  const res = name
+    ? {
+        astronomicalObjects: mock,
+        page: {
+          pageNumber: 0,
+          pageSize: 0,
+          numberOfElements: 0,
+          totalElements: 0,
+          totalPages: 0,
+          firstPage: true,
+          lastPage: true,
+        },
+      }
+    : {
+        astronomicalObjects: mock,
+        page: {
+          pageNumber: pageNumber,
+          pageSize: pageSize,
+          numberOfElements: 50,
+          totalElements: 2404,
+          totalPages: 49,
+          firstPage: true,
+          lastPage: false,
+        },
+      };
+
+  return HttpResponse.json(res);
 });
 
 const server = setupServer(handlers);
@@ -74,8 +89,20 @@ describe('ObjectList', async () => {
 
       const list = await screen.findByRole('list');
       const items = list.querySelectorAll('li');
-      console.log('>>>>', items.length);
       expect(items.length === size).toBeTruthy();
     });
+  });
+
+  it(`Shows "${TErrorInfo.empty}" message`, async () => {
+    const searchButton = await screen.findByText('Search');
+    const input = await screen.findByRole('searchbox');
+
+    act(() => {
+      fireEvent.change(input, { target: { value: query } });
+      fireEvent.click(searchButton);
+    });
+
+    const message = await screen.findByText(TErrorInfo.empty);
+    expect(message).toBeTruthy();
   });
 });
