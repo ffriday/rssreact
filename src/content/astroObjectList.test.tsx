@@ -1,7 +1,4 @@
-import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
-import { apiEnv } from '../constants/env';
-import { mockData } from '../tests/mockData';
 import {
   afterAll,
   afterEach,
@@ -16,50 +13,12 @@ import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '../routers/Router';
 import { QueryParams, TErrorInfo } from '../constants/types';
+import { handlers } from '../tests/mockHandlers';
 
-const endpoint = `${apiEnv.url}${apiEnv.endpoint}${apiEnv.search}`;
 const sizeArray = [5, 20];
 const query = 'NoResultsQuery';
 
-const handlers = http.post(endpoint, ({ request }) => {
-  const url = new URL(request.url);
-  const name = url.searchParams.get('name');
-  const pageSize = url.searchParams.get(QueryParams.pageSize);
-  const pageNumber = url.searchParams.get(QueryParams.pageNumber);
-  const mock = mockData.astronomicalObjects.filter(
-    (_, i) => i < Number(pageSize)
-  );
-
-  const res = name
-    ? {
-        astronomicalObjects: mock,
-        page: {
-          pageNumber: 0,
-          pageSize: 0,
-          numberOfElements: 0,
-          totalElements: 0,
-          totalPages: 0,
-          firstPage: true,
-          lastPage: true,
-        },
-      }
-    : {
-        astronomicalObjects: mock,
-        page: {
-          pageNumber: pageNumber,
-          pageSize: pageSize,
-          numberOfElements: 50,
-          totalElements: 2404,
-          totalPages: 49,
-          firstPage: true,
-          lastPage: false,
-        },
-      };
-
-  return HttpResponse.json(res);
-});
-
-const server = setupServer(handlers);
+const server = setupServer(...handlers);
 
 describe('ObjectList', async () => {
   beforeAll(() => server.listen());

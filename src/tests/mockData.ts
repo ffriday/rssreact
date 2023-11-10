@@ -449,3 +449,67 @@ export const mockData = {
     },
   ],
 };
+
+export const mockCardData = [
+  {
+    astronomicalObject: {
+      uid: 'ASMA0000015822',
+      name: "'aucdet IX",
+      astronomicalObjectType: 'PLANET',
+      location: {
+        uid: 'ASMA0000025892',
+        name: 'Alpha Quadrant',
+        astronomicalObjectType: 'QUADRANT',
+        location: {
+          uid: 'ASMA0000002775',
+          name: 'Milky Way Galaxy',
+        },
+      },
+      astronomicalObjects: [],
+    },
+  },
+  {
+    astronomicalObject: {
+      uid: 'ASMA0000264696',
+      name: "'etnap Nebula",
+      astronomicalObjectType: 'NEBULA',
+      location: {
+        uid: 'ASMA0000002015',
+        name: 'Beta Quadrant',
+        astronomicalObjectType: 'QUADRANT',
+        location: {
+          uid: 'ASMA0000002775',
+          name: 'Milky Way Galaxy',
+        },
+      },
+      astronomicalObjects: [
+        {
+          uid: 'ASMA0000232909',
+          name: 'Epsilon Hydrae',
+          astronomicalObjectType: 'STAR',
+          location: {
+            uid: 'ASMA0000264696',
+            name: "'etnap Nebula",
+          },
+        },
+      ],
+    },
+  },
+  {
+    astronomicalObject: {
+      uid: 'ASMA0000289027',
+      name: '1 Centauri',
+      astronomicalObjectType: 'STAR_SYSTEM',
+      location: {
+        uid: 'ASMA0000002015',
+        name: 'Beta Quadrant',
+        astronomicalObjectType: 'QUADRANT',
+        location: {
+          uid: 'ASMA0000002775',
+          name: 'Milky Way Galaxy',
+        },
+      },
+      astronomicalObjects: [],
+    },
+  },
+];
