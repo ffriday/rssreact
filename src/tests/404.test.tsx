@@ -5,7 +5,7 @@ import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import { router } from '../routers/Router';
 import { TErrorInfo } from '../constants/types';
 
-const wrongRoute = `${import.meta.env.BASE_URL}0/test/wrongRoute`;
+const wrongRoute = `${import.meta.env.BASE_URL}0/test/wrongRoute?123`;
 
 it('Renders 404 page', async () => {
   render(

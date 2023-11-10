@@ -25,7 +25,6 @@ describe('Pagination', () => {
 
   it('Renders', () => {
     expect(screen.queryByLabelText('Items:')).not.toBeNull();
-    expect(screen.findAllByRole('option')).not.toBeNull();
   });
 
   it('Changes url', () => {
