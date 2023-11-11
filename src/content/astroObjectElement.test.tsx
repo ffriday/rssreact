@@ -44,8 +44,8 @@ describe('List item', async () => {
   afterAll(() => server.close());
 
   it('Renders and shows data', async () => {
-    const list = await screen.findByRole('list');
-    const item = list.querySelectorAll('li')[cardNumber];
+    const list = await screen.findAllByRole('listitem');
+    const item = list[cardNumber];
 
     expect(item.textContent).toContain(name);
     expect(item.textContent).toContain(astronomicalObjectType);
@@ -53,8 +53,8 @@ describe('List item', async () => {
   });
 
   it('Opens detailed card', async () => {
-    const list = await screen.findByRole('list');
-    const item = list.querySelectorAll('li')[cardNumber];
+    const list = await screen.findAllByRole('listitem');
+    const item = list[cardNumber];
 
     act(() => {
       fireEvent.click(item);
@@ -66,8 +66,8 @@ describe('List item', async () => {
   });
 
   it('Makes fetch', async () => {
-    const list = await screen.findByRole('list');
-    const item = list.querySelectorAll('li')[cardNumber];
+    const list = await screen.findAllByRole('listitem');
+    const item = list[cardNumber];
 
     act(() => {
       fireEvent.click(item);
