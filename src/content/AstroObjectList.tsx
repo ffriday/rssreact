@@ -12,10 +12,9 @@ export default function AstroObjectList(): JSX.Element {
   const [selectedUid, setSelectedUid] = useState('');
   const [, setSearchParams] = useSearchParams();
 
-  useEffect(
-    () => addObjectList(astronomicalObjects),
-    [astronomicalObjects, addObjectList]
-  );
+  useEffect(() => {
+    if (addObjectList) addObjectList(astronomicalObjects);
+  }, [astronomicalObjects, addObjectList]);
 
   const selectUid = (uid: string) => {
     if (uid) {
@@ -25,10 +24,7 @@ export default function AstroObjectList(): JSX.Element {
   };
 
   return (
-    <section
-      onClick={() => selectUid('')}
-      className="flex flex-col w-full mx-2"
-    >
+    <section className="flex flex-col w-full mx-2">
       {!page.totalElements && <MessageBox message={TErrorInfo.empty} />}
       <ul className="flex flex-col gap-1">
         {astronomicalObjects.map((element) => (

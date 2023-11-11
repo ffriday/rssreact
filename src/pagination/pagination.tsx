@@ -13,6 +13,8 @@ export default function Pagination({
   const [searchParams] = useSearchParams();
   const { state } = useContext(SearchContext);
   const uid = searchParams.get(QueryParams.uid);
+  const [, setSearchParams] = useSearchParams();
+
   const params = uid
     ? `?${QueryParams.pageSize}=${state.itemsPerPage}&${QueryParams.uid}=${uid}`
     : `?${QueryParams.pageSize}=${state.itemsPerPage}`;
@@ -20,7 +22,12 @@ export default function Pagination({
   const forward = lastPage ? pageNumber : pageNumber + 1;
 
   return (
-    <nav className="flex flex-row text-white p-2 items-center justify-center">
+    <nav
+      onClick={() =>
+        setSearchParams({ uid: '', pageSize: state.itemsPerPage.toString() })
+      }
+      className="flex flex-row text-white p-2 items-center justify-center"
+    >
       <Link
         onClick={(event) => event.stopPropagation()}
         className={`p-2 select-none ${firstPage ? 'pointer-events-none' : ''}`}

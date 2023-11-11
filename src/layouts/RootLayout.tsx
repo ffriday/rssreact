@@ -11,12 +11,8 @@ import {
 
 export const SearchContext = createContext<TAppState>({
   state: initialSearchContextState(),
-  updateState: (newState: Partial<TSearchContext>) => {
-    newState;
-  },
-  addObjectList: (objectList: TAstronomicalObject[]) => {
-    objectList;
-  },
+  updateState: null,
+  addObjectList: null,
   objectList: [],
 });
 
@@ -51,7 +47,7 @@ export default function RootLayout(): JSX.Element {
         state: appState,
         objectList: objectList,
         updateState: updateAppState,
-        addObjectList,
+        addObjectList: addObjectList,
       }}
     >
       <div className="flex flex-col justify-top h-full bg-gray-700 font-mono">

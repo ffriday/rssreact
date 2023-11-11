@@ -9,7 +9,7 @@ export function SelectPageSize(): JSX.Element {
   const pageSizes = [5, 10, 20];
 
   const setContext = (size: number): void => {
-    updateState({ itemsPerPage: size });
+    if (updateState) updateState({ itemsPerPage: size });
     window.localStorage.setItem(LSKey.pageSize, size.toString());
     navigate(`/0/?${QueryParams.pageSize}=${size}`);
   };

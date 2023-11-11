@@ -60,4 +60,16 @@ describe('Object card', async () => {
 
     expect(card).not.toBeTruthy();
   });
+
+  it('Closes on left panel click', async () => {
+    const [, nav] = await screen.findAllByRole('navigation');
+
+    act(() => {
+      fireEvent.click(nav);
+    });
+
+    const card = screen.queryByTestId('card-element');
+
+    expect(card).not.toBeTruthy();
+  });
 });
