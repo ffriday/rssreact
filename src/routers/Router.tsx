@@ -8,7 +8,7 @@ import RootLayout from '../layouts/RootLayout';
 import { apiLoadData } from '../helpers/helpers';
 import { LSKey, QueryParams, TErrorInfo } from '../constants/types';
 import ErrorMessage from '../errorBoundary/errorMessage';
-import Content from '../content/Content';
+import { Content } from '../content';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(

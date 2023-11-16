@@ -1,6 +1,6 @@
 import { useAsyncValue, useSearchParams } from 'react-router-dom';
 import MessageBox from '../messageBox/messageBox';
-import AstroObjectElement from './AstroObjectElement';
+import { AstroObjectElement } from './';
 import { TErrorInfo, TSearchResponse } from '../constants/types';
 import { useContext, useEffect, useState } from 'react';
 import Pagination from '../pagination/pagination';
