@@ -1,16 +1,5 @@
-import {
-  LoaderFunctionArgs,
-  defer,
-  isRouteErrorResponse,
-} from 'react-router-dom';
-import { apiEnv } from '../constants/env';
-import {
-  LSKey,
-  QueryParams,
-  TSearchContext,
-  TSearchResponse,
-  WrappedAstroObject,
-} from '../constants/types';
+import { isRouteErrorResponse } from 'react-router-dom';
+import { LSKey, TSearchContext } from '../constants/types';
 
 export const initialSearchContextState = (): TSearchContext => ({
   queryParams: {
@@ -28,51 +17,6 @@ export const initialSearchContextState = (): TSearchContext => ({
 
 export const loadLastSearch = (): string =>
   window.localStorage.getItem(LSKey.lastSearch) ?? '';
-
-const apiLoadSearch = async (
-  query: string,
-  page?: string | undefined,
-  size?: string | undefined | null
-): Promise<TSearchResponse> => {
-  const pageNumber = page ? `&pageNumber=${page}` : '';
-  const pageSize = size
-    ? `&pageSize=${size}`
-    : `&pageSize=${QueryParams.defaultPageSize}`;
-  const url = `${apiEnv.url}${apiEnv.endpoint}${apiEnv.search}?name=${query}${pageSize}${pageNumber}`;
-  return fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  }).then((data) => data.json());
-};
-
-const apiLoadItem = async (uid: string): Promise<WrappedAstroObject> => {
-  const url = `${apiEnv.url}${apiEnv.endpoint}?uid=${uid}`;
-  return fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  }).then((data) => data.json());
-};
-
-export const apiLoadData = async ({ params, request }: LoaderFunctionArgs) => {
-  const uid = new URL(request.url).searchParams.get(QueryParams.uid);
-  const itemsPerPage = new URL(request.url).searchParams.get(
-    QueryParams.pageSize
-  );
-  const search = apiLoadSearch(
-    params[QueryParams.query] || '',
-    params[QueryParams.pageNumber],
-    itemsPerPage
-  );
-  if (uid) {
-    return defer({ list: search, item: apiLoadItem(uid) });
-  } else {
-    return defer({ list: search });
-  }
-};
 
 export const getErrorMessage = (error: unknown) => {
   let message = '';

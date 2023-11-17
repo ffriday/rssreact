@@ -15,7 +15,6 @@ export default function Search({ defaultValue }: TSearch): JSX.Element {
 
   const search = (): void => {
     dispatch(setQuery(currentSearch.trim()));
-    console.log(params.query);
     window.localStorage.setItem(LSKey.lastSearch, currentSearch.trim());
     navigate(
       `0/${currentSearch.trim()}?${QueryParams.pageSize}=${params.pageSize}`

@@ -14,7 +14,6 @@ import {
 export default function AstroObjectList(): JSX.Element {
   const [loadList, { data }] = useAddSearchMutation();
   const params = useAppSelector((state) => state.searchParams);
-  // const [selectedUid, setSelectedUid] = useState('');
   const [, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
 

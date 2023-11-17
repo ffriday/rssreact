@@ -1,9 +1,12 @@
 import { useSearchParams } from 'react-router-dom';
 import { TAstronomicalObject } from '../constants/types';
 import MessageBox from '../messageBox/messageBox';
-import { useContext } from 'react';
-import { SearchContext } from '../layouts/RootLayout';
-import { useAppSelector, useGetItemQuery } from '../store';
+import {
+  setUid,
+  useAppDispatch,
+  useAppSelector,
+  useGetItemQuery,
+} from '../store';
 
 export default function AstroItem(): JSX.Element {
   const params = useAppSelector((state) => state.searchParams);
@@ -37,8 +40,6 @@ export default function AstroItem(): JSX.Element {
       </>
     );
   }
-
-  if (!data && !isFetching) return <></>;
 
   return <section className="flex flex-col w-full mx-2">{content}</section>;
 }
@@ -82,12 +83,14 @@ function AstroNeighbours({ obj }: { obj: TAstronomicalObject[] }): JSX.Element {
 
 function CloseItemView(): JSX.Element {
   const [, setSearchParams] = useSearchParams();
-  const { state } = useContext(SearchContext);
+  const params = useAppSelector((state) => state.searchParams.pageSize);
+  const dispatch = useAppDispatch();
   return (
     <button
-      onClick={() =>
-        setSearchParams({ uid: '', pageSize: state.itemsPerPage.toString() })
-      }
+      onClick={() => {
+        dispatch(setUid(''));
+        setSearchParams({ uid: '', pageSize: params.toString() });
+      }}
       className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-1"
     >
       Close
