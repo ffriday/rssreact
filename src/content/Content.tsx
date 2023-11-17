@@ -1,17 +1,13 @@
-import { useLoaderData } from 'react-router-dom';
-import { TSearchResponse, TSingleAstronomicalObject } from '../constants/types';
-import { ContentWrapper, AstroObjectList, AstroItem } from './';
+import { AstroObjectList, AstroItem } from './';
+import { useAppSelector } from '../store';
 
 export default function Content(): JSX.Element {
-  const { list, item } = useLoaderData() as {
-    list: Promise<TSearchResponse>;
-    item: Promise<TSingleAstronomicalObject>;
-  };
+  const uid = useAppSelector((state) => state.searchParams.uid);
 
   return (
     <>
-      <ContentWrapper data={list} content={<AstroObjectList />} />
-      <ContentWrapper data={item} content={<AstroItem />} />
+      <AstroObjectList />
+      {uid && <AstroItem />}
     </>
   );
 }

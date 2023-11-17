@@ -5,10 +5,11 @@ import {
   Route,
 } from 'react-router-dom';
 import RootLayout from '../layouts/RootLayout';
-import { apiLoadData } from '../helpers/helpers';
+// import { apiLoadData } from '../helpers/helpers';
 import { LSKey, QueryParams, TErrorInfo } from '../constants/types';
 import ErrorMessage from '../errorBoundary/errorMessage';
 import { Content } from '../content';
+// import { api, store } from '../store';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,7 +35,8 @@ export const router = createBrowserRouter(
       <Route
         path={`/:${QueryParams.pageNumber}/:${QueryParams.query}?`}
         element={<Content />}
-        loader={apiLoadData}
+        // loader={apiLoadData}
+        // loader={async () => await store.dispatch(api.endpoints.addSearch.initiate({query: '', size: QueryParams.defaultPageSize, page: '1'}))}
         errorElement={<Content />}
       />
       <Route
