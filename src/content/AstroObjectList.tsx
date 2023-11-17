@@ -2,15 +2,21 @@ import { useSearchParams } from 'react-router-dom';
 import MessageBox from '../messageBox/messageBox';
 import { AstroObjectElement } from './';
 import { TErrorInfo } from '../constants/types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Pagination from '../pagination/pagination';
-import { useAddSearchMutation, useAppSelector } from '../store';
+import {
+  setUid,
+  useAddSearchMutation,
+  useAppDispatch,
+  useAppSelector,
+} from '../store';
 
 export default function AstroObjectList(): JSX.Element {
   const [loadList, { data }] = useAddSearchMutation();
   const params = useAppSelector((state) => state.searchParams);
-  const [selectedUid, setSelectedUid] = useState('');
+  // const [selectedUid, setSelectedUid] = useState('');
   const [, setSearchParams] = useSearchParams();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     (async () => {
@@ -24,7 +30,7 @@ export default function AstroObjectList(): JSX.Element {
 
   const selectUid = (uid: string) => {
     if (uid) {
-      setSelectedUid(uid);
+      dispatch(setUid(uid));
       setSearchParams({ uid, pageSize: params.pageSize.toString() });
     }
   };
@@ -44,7 +50,7 @@ export default function AstroObjectList(): JSX.Element {
                 key={element.uid}
                 {...element}
                 selectUid={selectUid}
-                isSelected={element.uid === selectedUid}
+                isSelected={element.uid === params.uid}
               />
             ))}
           </ul>

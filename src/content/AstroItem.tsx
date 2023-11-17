@@ -7,38 +7,40 @@ import { useAppSelector, useGetItemQuery } from '../store';
 
 export default function AstroItem(): JSX.Element {
   const params = useAppSelector((state) => state.searchParams);
-  const { data } = useGetItemQuery({ uid: params.uid });
+  const { data, isFetching } = useGetItemQuery({ uid: params.uid });
 
-  if (!data) return <></>;
+  let content = <></>;
+  if (isFetching) {
+    content = isFetching ? <MessageBox message="Loading..." /> : <></>;
+  } else if (!data) {
+    content = <MessageBox message="Error" />;
+  } else {
+    const {
+      astronomicalObject: {
+        astronomicalObjectType,
+        astronomicalObjects,
+        name,
+        uid,
+        location,
+      },
+    } = data;
+    content = (
+      <>
+        <AstroItemView
+          astronomicalObjectType={astronomicalObjectType}
+          name={name}
+          uid={uid}
+          location={location}
+        />
+        <AstroNeighbours obj={astronomicalObjects} />
+        <CloseItemView />
+      </>
+    );
+  }
 
-  const {
-    astronomicalObject: {
-      astronomicalObjects,
-      astronomicalObjectType,
-      name,
-      uid,
-      location,
-    },
-  } = data;
+  if (!data && !isFetching) return <></>;
 
-  return (
-    <section className="flex flex-col w-full mx-2">
-      {!data ? (
-        <MessageBox message="Loading..." />
-      ) : (
-        <>
-          <AstroItemView
-            astronomicalObjectType={astronomicalObjectType}
-            name={name}
-            uid={uid}
-            location={location}
-          />
-          <AstroNeighbours obj={astronomicalObjects} />
-          <CloseItemView />
-        </>
-      )}
-    </section>
-  );
+  return <section className="flex flex-col w-full mx-2">{content}</section>;
 }
 
 function AstroItemView({

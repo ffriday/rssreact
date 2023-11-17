@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LSKey, QueryParams } from '../constants/types';
-import { setQuery, setUid, useAppDispatch, useAppSelector } from '../store';
+import { setQuery, useAppDispatch, useAppSelector } from '../store';
 
 type TSearch = {
   defaultValue: string;
