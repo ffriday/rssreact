@@ -15,12 +15,12 @@ export default function AstroObjectList(): JSX.Element {
   useEffect(() => {
     (async () => {
       await loadList({
-        query: params.uid,
+        query: params.query,
         page: params.pageNumber.toString(),
         size: params.pageSize.toString(),
       }).unwrap();
     })();
-  }, [loadList, params.pageNumber, params.pageSize, params.uid]);
+  }, [loadList, params.pageNumber, params.pageSize, params.query]);
 
   const selectUid = (uid: string) => {
     if (uid) {

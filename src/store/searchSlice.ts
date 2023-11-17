@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { QueryParams } from '../constants/types';
+import { loadLastSearch } from '../helpers/helpers';
 
 export const searchSlice = createSlice({
   name: 'searchSlice',
   initialState: {
     firstPage: true,
     lastPage: false,
-    pageNumber: 1,
+    pageNumber: 0,
     pageSize: Number(QueryParams.defaultPageSize),
-    query: '',
+    query: loadLastSearch(),
     uid: '',
   },
   reducers: {
@@ -28,9 +29,13 @@ export const searchSlice = createSlice({
     setUid(state, action: PayloadAction<string>) {
       state.uid = action.payload;
     },
+    setQuery(state, action: PayloadAction<string>) {
+      state.query = action.payload;
+    },
   },
 });
 
-export const { prevPage, nextPage, setPageSize, setUid } = searchSlice.actions;
+export const { prevPage, nextPage, setPageSize, setUid, setQuery } =
+  searchSlice.actions;
 
 export default searchSlice.reducer;

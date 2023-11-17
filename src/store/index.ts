@@ -4,6 +4,7 @@ import searcReducer, {
   nextPage,
   setPageSize,
   setUid,
+  setQuery,
 } from './searchSlice';
 import { store, useAppDispatch, useAppSelector } from './store';
 
@@ -19,4 +20,5 @@ export {
   nextPage,
   setPageSize,
   setUid,
+  setQuery,
 };

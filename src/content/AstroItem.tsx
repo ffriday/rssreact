@@ -1,30 +1,29 @@
-import {
-  useAsyncValue,
-  useNavigation,
-  useSearchParams,
-} from 'react-router-dom';
-import { TAstronomicalObject, WrappedAstroObject } from '../constants/types';
+import { useSearchParams } from 'react-router-dom';
+import { TAstronomicalObject } from '../constants/types';
 import MessageBox from '../messageBox/messageBox';
 import { useContext } from 'react';
 import { SearchContext } from '../layouts/RootLayout';
+import { useAppSelector, useGetItemQuery } from '../store';
 
 export default function AstroItem(): JSX.Element {
-  const astronomicalObject = useAsyncValue() as WrappedAstroObject;
-  const { state } = useNavigation();
-  if (!astronomicalObject) return <></>;
+  const params = useAppSelector((state) => state.searchParams);
+  const { data } = useGetItemQuery({ uid: params.uid });
+
+  if (!data) return <></>;
+
   const {
     astronomicalObject: {
-      uid,
-      name,
-      astronomicalObjectType,
       astronomicalObjects,
+      astronomicalObjectType,
+      name,
+      uid,
       location,
     },
-  } = astronomicalObject;
+  } = data;
 
   return (
     <section className="flex flex-col w-full mx-2">
-      {state === 'loading' ? (
+      {!data ? (
         <MessageBox message="Loading..." />
       ) : (
         <>
