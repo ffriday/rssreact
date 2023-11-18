@@ -45,13 +45,6 @@ export type TSearchContext = {
   itemsPerPage: number;
 };
 
-export type TAppState = {
-  state: TSearchContext;
-  objectList: TAstronomicalObject[];
-  updateState: ((newState: Partial<TSearchContext>) => void) | null;
-  addObjectList: ((objectList: TAstronomicalObject[]) => void) | null;
-};
-
 export type TSort = {
   clauses: [];
 };

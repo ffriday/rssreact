@@ -9,7 +9,7 @@ export const searchSlice = createSlice({
     pageNumber: 0,
     pageSize: Number(loadPaseSize()),
     query: loadLastSearch(),
-    uid: '',
+    uid: new URL(window.location.href).searchParams.get('uid') || '',
   },
   reducers: {
     prevPage(state) {
