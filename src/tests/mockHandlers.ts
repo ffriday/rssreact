@@ -21,12 +21,12 @@ export const handlers = [
           astronomicalObjects: mock,
           page: {
             pageNumber: 0,
-            pageSize: 0,
+            pageSize: 10,
             numberOfElements: 0,
             totalElements: 0,
             totalPages: 0,
             firstPage: true,
-            lastPage: true,
+            lastPage: false,
           },
         }
       : {

@@ -54,4 +54,4 @@ export const {
   setPage,
 } = searchSlice.actions;
 
-export default searchSlice.reducer;
+export const { reducer } = searchSlice;

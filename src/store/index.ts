@@ -1,5 +1,6 @@
 import { useGetItemQuery, useAddSearchMutation } from './api';
-import searchReducer, {
+import {
+  reducer,
   prevPage,
   nextPage,
   setPageSize,
@@ -19,9 +20,9 @@ import {
 
 export {
   store,
+  reducer as searchReducer,
   useGetItemQuery,
   useAddSearchMutation,
-  searchReducer,
   useAppDispatch,
   useAppSelector,
   prevPage,
