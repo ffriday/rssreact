@@ -8,18 +8,13 @@ import {
   expect,
   it,
 } from 'vitest';
-import {
-  act,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from '@testing-library/react';
+import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import { RouterProvider } from 'react-router-dom';
 import { router } from '../routers/Router';
 import { handlers } from '../tests/mockHandlers';
 import { mockData } from '../tests/mockData';
+import { renderWithProviders } from '../tests/renderer';
 
 const cardNumber: 0 | 1 | 2 = 0;
 const { name, astronomicalObjectType, location } =
@@ -34,7 +29,7 @@ server.events.on('request:start', ({ request }) => {
 describe('List item', async () => {
   beforeAll(() => server.listen());
   beforeEach(() => {
-    render(
+    renderWithProviders(
       <ErrorBoundary>
         <RouterProvider router={router} />
       </ErrorBoundary>

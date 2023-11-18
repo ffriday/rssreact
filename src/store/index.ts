@@ -1,5 +1,5 @@
-import { api, useGetItemQuery, useAddSearchMutation } from './api';
-import searcReducer, {
+import { useGetItemQuery, useAddSearchMutation } from './api';
+import searchReducer, {
   prevPage,
   nextPage,
   setPageSize,
@@ -8,14 +8,20 @@ import searcReducer, {
   setPageParams,
   setPage,
 } from './searchSlice';
-import { store, useAppDispatch, useAppSelector } from './store';
+import {
+  store,
+  useAppDispatch,
+  useAppSelector,
+  TStoreState,
+  TStoreDispatch,
+  TReducer,
+} from './store';
 
 export {
-  api,
   store,
   useGetItemQuery,
   useAddSearchMutation,
-  searcReducer,
+  searchReducer,
   useAppDispatch,
   useAppSelector,
   prevPage,
@@ -26,3 +32,4 @@ export {
   setPageParams,
   setPage,
 };
+export type { TStoreState, TStoreDispatch, TReducer };

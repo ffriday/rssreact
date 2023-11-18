@@ -1,24 +1,16 @@
-import { fireEvent, render, screen, act } from '@testing-library/react';
+import { fireEvent, screen, act } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it } from 'vitest';
 import Pagination from './pagination';
+import { renderWithProviders } from '../tests/renderer';
 
-const baseNumber = 10;
 let location = '';
 
 describe('Pagination', () => {
   beforeEach(() => {
-    render(
+    renderWithProviders(
       <BrowserRouter>
-        <Pagination
-          firstPage={false}
-          lastPage={false}
-          numberOfElements={baseNumber}
-          pageNumber={Math.floor(baseNumber / 2)}
-          pageSize={baseNumber}
-          totalElements={baseNumber * baseNumber}
-          totalPages={baseNumber}
-        />
+        <Pagination />
       </BrowserRouter>
     );
   });

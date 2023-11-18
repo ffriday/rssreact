@@ -4,13 +4,17 @@ import { expect, it } from 'vitest';
 import ErrorBoundary from '../errorBoundary/ErrorBoundary';
 import { router } from '../routers/Router';
 import { TErrorInfo } from '../constants/types';
+import { Provider } from 'react-redux';
+import { store } from '../store';
 
 const wrongRoute = `${import.meta.env.BASE_URL}0/test/wrongRoute?123`;
 
 it('Renders 404 page', async () => {
   render(
     <ErrorBoundary>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </ErrorBoundary>
   );
 

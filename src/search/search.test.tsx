@@ -1,9 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { fireEvent, render, screen, act } from '@testing-library/react';
+import { fireEvent, screen, act } from '@testing-library/react';
 import Search from './Search';
 import { BrowserRouter } from 'react-router-dom';
 import { LSKey } from '../constants/types';
 import { loadLastSearch } from '../helpers/helpers';
+import { renderWithProviders } from '../tests/renderer';
 
 const valueForInput = 'test-text';
 const valueForLS = `second-${valueForInput}`;
@@ -11,7 +12,7 @@ const valueForLS = `second-${valueForInput}`;
 describe('Search component', () => {
   beforeEach(() => {
     window.localStorage.setItem(LSKey.lastSearch, valueForLS);
-    render(
+    renderWithProviders(
       <BrowserRouter>
         <Search defaultValue={loadLastSearch()} />
       </BrowserRouter>
