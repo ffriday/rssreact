@@ -5,6 +5,7 @@ import { TErrorInfo } from '../constants/types';
 import { useEffect } from 'react';
 import Pagination from '../pagination/pagination';
 import {
+  setPageParams,
   setUid,
   useAddSearchMutation,
   useAppDispatch,
@@ -26,6 +27,15 @@ export default function AstroObjectList(): JSX.Element {
       }).unwrap();
     })();
   }, [loadList, params.pageNumber, params.pageSize, params.query]);
+
+  useEffect(() => {
+    dispatch(
+      setPageParams({
+        first: data?.page.firstPage ?? true,
+        last: data?.page.lastPage ?? false,
+      })
+    );
+  }, [data?.page.firstPage, data?.page.lastPage, dispatch]);
 
   const selectUid = (uid: string) => {
     if (uid) {
@@ -53,7 +63,7 @@ export default function AstroObjectList(): JSX.Element {
               />
             ))}
           </ul>
-          <Pagination {...data.page} />
+          <Pagination />
         </>
       )}
     </section>

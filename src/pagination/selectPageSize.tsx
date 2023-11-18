@@ -1,17 +1,18 @@
-import { useContext } from 'react';
-import { SearchContext } from '../layouts/RootLayout';
 import { useNavigate } from 'react-router-dom';
 import { LSKey, QueryParams } from '../constants/types';
+import { setPage, setPageSize, useAppDispatch, useAppSelector } from '../store';
 
 export function SelectPageSize(): JSX.Element {
-  const { state, updateState } = useContext(SearchContext);
+  const params = useAppSelector((state) => state.searchParams);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const pageSizes = [5, 10, 20];
 
-  const setContext = (size: number): void => {
-    if (updateState) updateState({ itemsPerPage: size });
+  const updatePageSize = (size: number): void => {
+    dispatch(setPageSize(size));
+    dispatch(setPage(0));
     window.localStorage.setItem(LSKey.pageSize, size.toString());
-    navigate(`/0/?${QueryParams.pageSize}=${size}`);
+    navigate(`/0/${params.query}?${QueryParams.pageSize}=${size}`);
   };
 
   return (
@@ -23,10 +24,10 @@ export function SelectPageSize(): JSX.Element {
         className="text-black ml-1"
         name="pageSize"
         id="pageSize"
-        defaultValue={state.itemsPerPage}
+        defaultValue={params.pageSize}
         onChange={(event) => {
           event.stopPropagation();
-          setContext(Number(event.currentTarget.value));
+          updatePageSize(Number(event.currentTarget.value));
         }}
         onClick={(event) => {
           event.stopPropagation();

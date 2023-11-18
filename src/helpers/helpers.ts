@@ -1,5 +1,5 @@
 import { isRouteErrorResponse } from 'react-router-dom';
-import { LSKey, TSearchContext } from '../constants/types';
+import { LSKey, QueryParams, TSearchContext } from '../constants/types';
 
 export const initialSearchContextState = (): TSearchContext => ({
   queryParams: {
@@ -17,6 +17,9 @@ export const initialSearchContextState = (): TSearchContext => ({
 
 export const loadLastSearch = (): string =>
   window.localStorage.getItem(LSKey.lastSearch) ?? '';
+
+export const loadPaseSize = (): string =>
+  window.localStorage.getItem(LSKey.pageSize) ?? QueryParams.defaultPageSize;
 
 export const getErrorMessage = (error: unknown) => {
   let message = '';

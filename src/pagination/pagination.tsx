@@ -1,45 +1,49 @@
-import { Link, useParams, useSearchParams } from 'react-router-dom';
-import { QueryParams, TSearchPage } from '../constants/types';
-import { useContext } from 'react';
-import { SearchContext } from '../layouts/RootLayout';
+import { Link, useSearchParams } from 'react-router-dom';
 import { SelectPageSize } from './selectPageSize';
+import {
+  nextPage,
+  prevPage,
+  setUid,
+  useAppDispatch,
+  useAppSelector,
+} from '../store';
+import { QueryParams } from '../constants/types';
 
-export default function Pagination({
-  firstPage,
-  lastPage,
-  pageNumber,
-}: TSearchPage): JSX.Element {
-  const { query } = useParams();
-  const [searchParams] = useSearchParams();
-  const { state } = useContext(SearchContext);
-  const uid = searchParams.get(QueryParams.uid);
+export default function Pagination(): JSX.Element {
+  const params = useAppSelector((state) => state.searchParams);
+  const dispatch = useAppDispatch();
   const [, setSearchParams] = useSearchParams();
 
-  const params = uid
-    ? `?${QueryParams.pageSize}=${state.itemsPerPage}&${QueryParams.uid}=${uid}`
-    : `?${QueryParams.pageSize}=${state.itemsPerPage}`;
-  const back = firstPage ? pageNumber : pageNumber - 1;
-  const forward = lastPage ? pageNumber : pageNumber + 1;
+  const urlParams = `?${QueryParams.pageSize}=${params.pageSize}&${QueryParams.uid}=${params.uid}`;
+  // const back = firstPage ? pageNumber : pageNumber - 1;
+  // const forward = lastPage ? pageNumber : pageNumber + 1;
 
   return (
     <nav
-      onClick={() =>
-        setSearchParams({ uid: '', pageSize: state.itemsPerPage.toString() })
-      }
+      onClick={() => {
+        dispatch(setUid(''));
+        setSearchParams({ uid: '', pageSize: params.pageSize.toString() });
+      }}
       className="flex flex-row text-white p-2 items-center justify-center"
     >
       <Link
-        onClick={(event) => event.stopPropagation()}
-        className={`p-2 select-none ${firstPage ? 'pointer-events-none' : ''}`}
-        to={`/${back}/${query ?? ''}${params}`}
+        onClick={(event) => {
+          dispatch(prevPage());
+          event.stopPropagation();
+        }}
+        className={'p-2 select-none'}
+        to={`/${params.pageNumber}/${params.query}${urlParams}`}
       >
         {'<-'}
       </Link>
-      <p className="p-2">{pageNumber + 1}</p>
+      <p className="p-2">{params.pageNumber + 1}</p>
       <Link
-        onClick={(event) => event.stopPropagation()}
-        className={`p-2 select-none ${lastPage ? 'pointer-events-none' : ''}`}
-        to={`/${forward}/${query ?? ''}${params}`}
+        onClick={(event) => {
+          dispatch(nextPage());
+          event.stopPropagation();
+        }}
+        className={'p-2 select-none'}
+        to={`/${params.pageNumber}/${params.query}${urlParams}`}
       >
         {'->'}
       </Link>
