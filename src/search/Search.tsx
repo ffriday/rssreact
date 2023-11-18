@@ -8,7 +8,7 @@ type TSearch = {
 };
 
 export default function Search({ defaultValue }: TSearch): JSX.Element {
-  const params = useAppSelector((state) => state.searchParams);
+  const { pageSize } = useAppSelector((state) => state.searchParams);
   const dispatch = useAppDispatch();
   const [currentSearch, setCurrentSearch] = useState(defaultValue);
   const navigate = useNavigate();
@@ -16,9 +16,7 @@ export default function Search({ defaultValue }: TSearch): JSX.Element {
   const search = (): void => {
     dispatch(setQuery(currentSearch.trim()));
     window.localStorage.setItem(LSKey.lastSearch, currentSearch.trim());
-    navigate(
-      `0/${currentSearch.trim()}?${QueryParams.pageSize}=${params.pageSize}`
-    );
+    navigate(`0/${currentSearch.trim()}?${QueryParams.pageSize}=${pageSize}`);
   };
 
   return (

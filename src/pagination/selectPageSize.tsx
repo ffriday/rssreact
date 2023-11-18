@@ -3,7 +3,7 @@ import { LSKey, QueryParams } from '../constants/types';
 import { setPage, setPageSize, useAppDispatch, useAppSelector } from '../store';
 
 export function SelectPageSize(): JSX.Element {
-  const params = useAppSelector((state) => state.searchParams);
+  const { query, pageSize } = useAppSelector((state) => state.searchParams);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const pageSizes = [5, 10, 20];
@@ -12,7 +12,7 @@ export function SelectPageSize(): JSX.Element {
     dispatch(setPageSize(size));
     dispatch(setPage(0));
     window.localStorage.setItem(LSKey.pageSize, size.toString());
-    navigate(`/0/${params.query}?${QueryParams.pageSize}=${size}`);
+    navigate(`/0/${query}?${QueryParams.pageSize}=${size}`);
   };
 
   return (
@@ -24,7 +24,7 @@ export function SelectPageSize(): JSX.Element {
         className="text-black ml-1"
         name="pageSize"
         id="pageSize"
-        defaultValue={params.pageSize}
+        defaultValue={pageSize}
         onChange={(event) => {
           event.stopPropagation();
           updatePageSize(Number(event.currentTarget.value));

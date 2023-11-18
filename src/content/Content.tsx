@@ -1,15 +1,11 @@
 import { AstroObjectList, AstroItem } from './';
 import { setPage, setPageSize, setUid, useAppDispatch } from '../store';
-import { useParams, useSearchParams } from 'react-router-dom';
-import { QueryParams } from '../constants/types';
 import { useEffect } from 'react';
+import { useAppURLParams } from '../helpers/hooks';
 
 export default function Content(): JSX.Element {
-  const [searchParams] = useSearchParams();
-  const { pageNumber } = useParams();
   const dispatch = useAppDispatch();
-  const uid = searchParams.get(QueryParams.uid);
-  const size = searchParams.get(QueryParams.pageSize);
+  const { pageNumber, size, uid } = useAppURLParams();
 
   useEffect(() => {
     if (uid) dispatch(setUid(uid));

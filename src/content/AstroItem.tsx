@@ -9,8 +9,8 @@ import {
 } from '../store';
 
 export default function AstroItem(): JSX.Element {
-  const params = useAppSelector((state) => state.searchParams);
-  const { data, isFetching } = useGetItemQuery({ uid: params.uid });
+  const { uid } = useAppSelector((state) => state.searchParams);
+  const { data, isFetching } = useGetItemQuery({ uid: uid });
 
   let content = <></>;
   if (isFetching) {
@@ -83,13 +83,13 @@ function AstroNeighbours({ obj }: { obj: TAstronomicalObject[] }): JSX.Element {
 
 function CloseItemView(): JSX.Element {
   const [, setSearchParams] = useSearchParams();
-  const params = useAppSelector((state) => state.searchParams.pageSize);
+  const { pageSize } = useAppSelector((state) => state.searchParams);
   const dispatch = useAppDispatch();
   return (
     <button
       onClick={() => {
         dispatch(setUid(''));
-        setSearchParams({ uid: '', pageSize: params.toString() });
+        setSearchParams({ uid: '', pageSize: pageSize.toString() });
       }}
       className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-1"
     >
