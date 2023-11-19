@@ -39,12 +39,6 @@ export type TSearchPage = {
   totalPages: number;
 };
 
-export type TSearchContext = {
-  queryParams: TSearchPage;
-  uid: string;
-  itemsPerPage: number;
-};
-
 export type TSort = {
   clauses: [];
 };
