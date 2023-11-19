@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { loadLastSearch, loadPaseSize } from '../helpers/helpers';
+import { api } from './api';
 
 export const searchSlice = createSlice({
   name: 'searchSlice',
@@ -10,6 +11,10 @@ export const searchSlice = createSlice({
     pageSize: Number(loadPaseSize()),
     query: loadLastSearch(),
     uid: new URL(window.location.href).searchParams.get('uid') || '',
+    flags: {
+      listLoading: false,
+      itemLoading: false,
+    },
   },
   reducers: {
     prevPage(state) {
@@ -41,6 +46,20 @@ export const searchSlice = createSlice({
       state.firstPage = action.payload.first;
       state.lastPage = action.payload.last;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addMatcher(api.endpoints.addSearch.matchPending, (state) => {
+      state.flags.listLoading = true;
+      state.flags.itemLoading = true;
+    }),
+      builder.addMatcher(api.endpoints.addSearch.matchFulfilled, (state) => {
+        state.flags.listLoading = false;
+        state.flags.itemLoading = false;
+      }),
+      builder.addMatcher(api.endpoints.addSearch.matchRejected, (state) => {
+        state.flags.listLoading = false;
+        state.flags.itemLoading = false;
+      });
   },
 });
 
