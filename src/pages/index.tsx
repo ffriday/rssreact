@@ -1,7 +1,13 @@
+import { ContentLayout, RootLayout, SearchLayout } from "@/components/layout";
+import Search from "@/components/search/Search";
+
 export default function Home() {
-  return (
-    <main>
-      HELLO
-    </main>
+  return(
+    <RootLayout>
+      <SearchLayout>
+        <Search />
+      </SearchLayout>
+      <ContentLayout>CONTENT</ContentLayout>
+    </RootLayout>
   );
 }
