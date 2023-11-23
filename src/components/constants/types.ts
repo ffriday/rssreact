@@ -82,4 +82,5 @@ export enum QueryParams {
   pageSize = 'pageSize',
   defaultPageSize = '10',
   uid = 'uid',
+  searcInputName = 'search',
 }
