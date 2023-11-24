@@ -1,47 +1,31 @@
-import { useRouter } from 'next/router';
-import { TAstronomicalObject } from '../constants/types';
+import { TAstronomicalObject, WrappedAstroObject } from '../constants/types';
 import MessageBox from '../messageBox/messageBox';
-import {
-  useAppSelector,
-  useGetItemQuery,
-} from '../store';
-import { getQuery } from '../helpers/helpers';
+import { useGetItemQuery } from '../store';
+import { useMySearchParams } from '../helpers/hooks';
+import { useRouter } from 'next/router';
+import { parseParam } from '../helpers/helpers';
 
 type TAstroItem = {
-  uid: string
-}
+  uid: string;
+};
 
-export default function AstroItem({uid}: TAstroItem): JSX.Element {
+export default function AstroItem({ uid }: TAstroItem): JSX.Element {
   const { data } = useGetItemQuery({ uid: uid });
 
-  let content = <></>;
-  if (!data) {
-    content = <MessageBox message="Error" />;
-  } else {
-    const {
-      astronomicalObject: {
-        astronomicalObjectType,
-        astronomicalObjects,
-        name,
-        uid,
-        location,
-      },
-    } = data;
-    content = (
-      <>
-        <AstroItemView
-          astronomicalObjectType={astronomicalObjectType}
-          name={name}
-          uid={uid}
-          location={location}
-        />
-        <AstroNeighbours obj={astronomicalObjects} />
-        <CloseItemView />
-      </>
-    );
-  }
+  if (data === undefined || !data.astronomicalObject) return <MessageBox message="Error" />;
 
-  return <section className="flex flex-col w-full mx-2">{content}</section>;
+  return (
+    <section className="flex flex-col w-full mx-2">
+      <AstroItemView
+        astronomicalObjectType={data.astronomicalObject.astronomicalObjectType}
+        name={data.astronomicalObject.name}
+        uid={data.astronomicalObject.uid}
+        location={data.astronomicalObject.location}
+      />
+      <AstroNeighbours obj={data.astronomicalObject.astronomicalObjects} />
+      <CloseItemView />
+    </section>
+  );
 }
 
 function AstroItemView({
@@ -82,12 +66,22 @@ function AstroNeighbours({ obj }: { obj: TAstronomicalObject[] }): JSX.Element {
 }
 
 function CloseItemView(): JSX.Element {
+  const router = useRouter();
+  const { pageSize, pageNumber } = router.query;
+
+  const close = () =>
+    router.push({
+      pathname: parseParam(router.query.search),
+      query: {
+        uid: '',
+        pageSize,
+        pageNumber,
+      },
+    });
 
   return (
     <button
-      onClick={() => {
-        console.log('CLOSE');
-      }}
+      onClick={close}
       className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-1"
     >
       Close

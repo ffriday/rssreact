@@ -1,21 +1,31 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent } from "react";
-import { QueryParams } from "../constants/types";
-import { getSearchParams, paramsString } from "../helpers/helpers";
+import { FormEvent } from 'react';
+import { QueryParams } from '../constants/types';
+import { useRouter } from 'next/router';
 
 type TSearchProps = {
   searchQuery: string;
   urlParams: Record<string, string>;
-}
+};
 
-export default function Search({searchQuery, urlParams}: TSearchProps): JSX.Element {
+export default function Search({
+  searchQuery,
+  urlParams,
+}: TSearchProps): JSX.Element {
   const router = useRouter();
+  const { uid, pageSize, pageNumber } = router.query;
 
   const search = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const url = new FormData(event.currentTarget).get(QueryParams.searcInputName) || '';
-    router.push(`${url}?${paramsString(urlParams)}`);
+    const url =
+      new FormData(event.currentTarget).get(QueryParams.searcInputName) || '';
+    router.push({
+      pathname: url.toString(),
+      query: {
+        uid,
+        pageSize,
+        pageNumber,
+      },
+    });
   };
 
   return (
@@ -27,13 +37,9 @@ export default function Search({searchQuery, urlParams}: TSearchProps): JSX.Elem
         type={QueryParams.searcInputName}
         name={QueryParams.searcInputName}
       ></input>
-      <button
-        className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3 mt-1"
-      >
+      <button className="flex h-6 sm:h-7 content-center justify-center flex-wrap bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-3 mt-1">
         Search
       </button>
     </form>
   );
 }
-
-

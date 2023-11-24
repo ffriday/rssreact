@@ -1,6 +1,5 @@
 import AstroItem from '@/components/content/AstroItem';
-import Test from '@/components/content/test';
-import { getQuery, getSearchParams } from '@/components/helpers/helpers';
+import { parseParam, getSearchParams } from '@/components/helpers/helpers';
 import { ContentLayout, RootLayout, SearchLayout } from '@/components/layout';
 import Search from '@/components/search/Search';
 import {
@@ -18,7 +17,7 @@ export type THomeProps = {
 
 export const getServerSideProps: GetServerSideProps<THomeProps> =
   wrapper.getServerSideProps((store) => async ({ query }) => {
-    const search = getQuery(query.search);
+    const search = parseParam(query.search);
     const urlParams = getSearchParams(query);
     store.dispatch(
       addSearch.initiate({

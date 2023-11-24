@@ -1,46 +1,47 @@
 import { useEffect } from 'react';
 import {
-  setPageParams,
   useAddSearchMutation,
   useAppDispatch,
   useAppSelector,
 } from '../store';
-import { useParams, useSearchParams } from 'react-router-dom';
 import { QueryParams } from '../constants/types';
+import { useSearchParams } from 'next/navigation';
+import { parseParam, getSearchParams } from './helpers';
 
-export const useDataLoad = () => {
-  const [loadList, { data }] = useAddSearchMutation();
-  const { query, pageNumber, pageSize } = useAppSelector(
-    (state) => state.searchParams
-  );
-  const dispatch = useAppDispatch();
+// export const useDataLoad = () => {
+//   const [loadList, { data }] = useAddSearchMutation();
+//   const { query, pageNumber, pageSize } = useAppSelector(
+//     (state) => state.searchParams
+//   );
+//   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    (async () => {
-      await loadList({
-        query: query,
-        page: pageNumber.toString(),
-        size: pageSize.toString(),
-      }).unwrap();
-    })();
-  }, [loadList, pageNumber, pageSize, query]);
+//   useEffect(() => {
+//     (async () => {
+//       await loadList({
+//         query: query,
+//         page: pageNumber.toString(),
+//         size: pageSize.toString(),
+//       }).unwrap();
+//     })();
+//   }, [loadList, pageNumber, pageSize, query]);
 
-  useEffect(() => {
-    dispatch(
-      setPageParams({
-        first: data?.page.firstPage ?? true,
-        last: data?.page.lastPage ?? false,
-      })
-    );
-  }, [data?.page.firstPage, data?.page.lastPage, dispatch]);
+//   useEffect(() => {
+//     dispatch(
+//       setPageParams({
+//         first: data?.page.firstPage ?? true,
+//         last: data?.page.lastPage ?? false,
+//       })
+//     );
+//   }, [data?.page.firstPage, data?.page.lastPage, dispatch]);
 
-  return data;
-};
+//   return data;
+// };
 
-export const useAppURLParams = () => {
-  const [searchParams] = useSearchParams();
-  const { pageNumber } = useParams();
-  const uid = searchParams.get(QueryParams.uid);
-  const size = searchParams.get(QueryParams.pageSize);
-  return { pageNumber, uid, size };
+export const useMySearchParams = () => {
+  const searchParams = useSearchParams();
+  const search = searchParams.get(QueryParams.searcInputName) || '';
+  const uid = searchParams.get(QueryParams.uid) || '';
+  const pageSize = searchParams.get(QueryParams.pageSize) || '';
+  const pageNumber = searchParams.get(QueryParams.pageNumber) || '';
+  return { search, uid, pageNumber, pageSize };
 };
