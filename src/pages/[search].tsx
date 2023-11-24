@@ -3,10 +3,7 @@ import { ContentLayout, RootLayout, SearchLayout } from '@/components/layout';
 import Search from '@/components/search/Search';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { useRouter } from 'next/router';
-
-type THomeProps = {
-  searchQuery: string;
-}
+import { THomeProps } from '.';
 
 export const getServerSideProps: GetServerSideProps<THomeProps> = (async ({query}) => {
   return { props: { searchQuery: getQuery(query.search) } };
