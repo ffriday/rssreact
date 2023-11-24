@@ -1,23 +1,12 @@
 import { ContentLayout, RootLayout, SearchLayout } from '@/components/layout';
 import Search from '@/components/search/Search';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-
-export type THomeProps = {
-  searchQuery: string;
-}
+import HomeRoute, { THomeProps } from './[search]';
 
 export const getServerSideProps: GetServerSideProps<THomeProps> = (async ({query}) => {
-  return { props: { searchQuery: '' } };
+  return { props: { searchQuery: '', urlParams: {} } };
 })
 
-export default function Home({searchQuery}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
-  return (
-      <RootLayout>
-        <SearchLayout>
-          <Search searchQuery={searchQuery}/>
-        </SearchLayout>
-        <ContentLayout>lol</ContentLayout>
-      </RootLayout>
-  );
+export default function Home(params: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  return <HomeRoute {...params} />
 }

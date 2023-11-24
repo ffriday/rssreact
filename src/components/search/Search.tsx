@@ -1,19 +1,21 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent } from "react";
 import { QueryParams } from "../constants/types";
+import { getSearchParams, paramsString } from "../helpers/helpers";
 
 type TSearchProps = {
   searchQuery: string;
+  urlParams: Record<string, string>;
 }
 
-export default function Search({searchQuery}: TSearchProps): JSX.Element {
+export default function Search({searchQuery, urlParams}: TSearchProps): JSX.Element {
   const router = useRouter();
 
   const search = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const query = new FormData(event.currentTarget).get(QueryParams.searcInputName) || '';
-    router.push(query.toString());
+    const url = new FormData(event.currentTarget).get(QueryParams.searcInputName) || '';
+    router.push(`${url}?${paramsString(urlParams)}`);
   };
 
   return (
