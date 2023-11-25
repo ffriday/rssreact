@@ -11,6 +11,7 @@ export default function AstroObjectList(): JSX.Element {
   const data = useDataLoad();
   const firstPage = data?.page.firstPage ?? true;
   const lastPage = data?.page.lastPage ?? true;
+  const totalPages = data?.page.totalPages ?? 0;
 
   const selectUid = (uid: string) => {
     if (uid) {
@@ -44,7 +45,7 @@ export default function AstroObjectList(): JSX.Element {
               />
             ))}
           </ul>
-          {/* <Pagination firstPage lastPage /> */}
+          <Pagination firstPage={firstPage} lastPage={lastPage} totalPages={totalPages} />
         </>
       )}
     </section>

@@ -23,7 +23,7 @@ export default function Search({
         pageSize,
         pageNumber,
       },
-    });
+    }, undefined, {shallow: true});
   };
 
   return (

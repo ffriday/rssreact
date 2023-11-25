@@ -1,17 +1,20 @@
-import { LSKey, QueryParams } from '../constants/types';
-import { setPage, setPageSize, useAppDispatch, useAppSelector } from '../store';
+import { useRouter } from 'next/router';
+import { useMySearchParams } from '../helpers/hooks';
 
 export function SelectPageSize(): JSX.Element {
-  const { query, pageSize } = useAppSelector((state) => state.searchParams);
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { search, pageSize } = useMySearchParams();
   const pageSizes = [5, 10, 20];
 
   const updatePageSize = (size: number): void => {
-    dispatch(setPageSize(size));
-    dispatch(setPage(0));
-    window.localStorage.setItem(LSKey.pageSize, size.toString());
-    navigate(`/0/${query}?${QueryParams.pageSize}=${size}`);
+    router.push({
+      pathname: search,
+      query: {
+        uid: '',
+        pageSize: size,
+        pageNumber: 0,
+      },
+    }, undefined, {shallow: true});
   };
 
   return (

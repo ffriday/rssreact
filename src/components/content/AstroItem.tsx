@@ -3,19 +3,18 @@ import MessageBox from '../messageBox/messageBox';
 import { useGetItemQuery } from '../store';
 import { useRouter } from 'next/router';
 import { parseParam } from '../helpers/helpers';
-import { skipToken } from '@reduxjs/toolkit/query';
 import { useMySearchParams } from '../helpers/hooks';
 
 export default function AstroItem(): JSX.Element {
   const router = useRouter();
-  const uid = parseParam(router.query.uid);
+  const { uid } = useMySearchParams();
   const  { data } = useGetItemQuery({ uid: uid }, {skip: router.isFallback});
-
-  if (data === undefined || !data.astronomicalObject) return <MessageBox message="Error" />;
 
   return (
     <section className="flex flex-col w-full mx-2">
-      <AstroItemView
+      {data === undefined || !data.astronomicalObject ? <MessageBox message="Error" /> :
+      <>
+            <AstroItemView
         astronomicalObjectType={data.astronomicalObject.astronomicalObjectType}
         name={data.astronomicalObject.name}
         uid={data.astronomicalObject.uid}
@@ -23,6 +22,8 @@ export default function AstroItem(): JSX.Element {
       />
       <AstroNeighbours obj={data.astronomicalObject.astronomicalObjects} />
       <CloseItemView />
+      </>
+      }
     </section>
   );
 }
