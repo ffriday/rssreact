@@ -2,7 +2,6 @@ import { TAstronomicalObject, WrappedAstroObject } from '../constants/types';
 import MessageBox from '../messageBox/messageBox';
 import { useGetItemQuery } from '../store';
 import { useRouter } from 'next/router';
-import { parseParam } from '../helpers/helpers';
 import { useMySearchParams } from '../helpers/hooks';
 
 export default function AstroItem(): JSX.Element {

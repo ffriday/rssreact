@@ -28,9 +28,7 @@ export default function AstroObjectList(): JSX.Element {
 
   return (
     <section className="flex flex-col w-full mx-2">
-      {!data ? (
-        <MessageBox message={TErrorInfo.loading} />
-      ) : (
+      {data && (
         <>
           {!data.page.totalElements && (
             <MessageBox message={TErrorInfo.empty} />
@@ -45,7 +43,11 @@ export default function AstroObjectList(): JSX.Element {
               />
             ))}
           </ul>
-          <Pagination firstPage={firstPage} lastPage={lastPage} totalPages={totalPages} />
+          <Pagination
+            firstPage={firstPage}
+            lastPage={lastPage}
+            totalPages={totalPages}
+          />
         </>
       )}
     </section>
