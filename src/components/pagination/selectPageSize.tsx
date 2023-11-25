@@ -14,7 +14,7 @@ export function SelectPageSize(): JSX.Element {
         pageSize: size,
         pageNumber: 0,
       },
-    }, undefined, {shallow: true});
+    });
   };
 
   return (

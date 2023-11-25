@@ -8,5 +8,5 @@ export const getSearchParams = (query: ParsedUrlQuery) =>
 ({
   uid: parseParam(query[QueryParams.uid]),
   pageNumber: parseParam(query[QueryParams.pageNumber]),
-  pageSize: parseParam(query[QueryParams.pageSize])
+  pageSize: parseParam(query[QueryParams.pageSize]),
 });

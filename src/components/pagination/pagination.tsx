@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useMySearchParams } from '../helpers/hooks';
 import { SelectPageSize } from './selectPageSize';
@@ -59,9 +58,9 @@ function PageLink({ text, pageLink }: TPageLink): JSX.Element {
             pageSize,
             pageNumber: +pageNumber + pageLink,
           },
-        }, undefined, {shallow: true});
+        });
       }}
-      className={'p-2 select-none'}
+      className={'p-2 select-none'} 
       disabled={!pageLink }
     >
       {text}

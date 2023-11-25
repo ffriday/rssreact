@@ -1,5 +1,6 @@
 import AstroItem from '@/components/content/AstroItem';
 import AstroObjectList from '@/components/content/AstroObjectList';
+import ErrorBoundary from '@/components/error/ErrorBoundary';
 import { parseParam, getSearchParams } from '@/components/helpers/helpers';
 import { ContentLayout, RootLayout, SearchLayout } from '@/components/layout';
 import Search from '@/components/search/Search';
@@ -27,8 +28,8 @@ export const getServerSideProps: GetServerSideProps<THomeProps> =
         page: urlParams.pageNumber,
       })
     );
-    if(urlParams.uid) {
-      store.dispatch(getItem.initiate({uid: urlParams.uid}))
+    if (urlParams.uid) {
+      store.dispatch(getItem.initiate({ uid: urlParams.uid }));
     }
     await Promise.all(store.dispatch(getRunningQueriesThunk()));
     return { props: { searchQuery: search, urlParams } };
@@ -38,16 +39,17 @@ export default function HomeRoute({
   searchQuery,
   urlParams,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-
   return (
-    <RootLayout>
-      <SearchLayout>
-        <Search searchQuery={searchQuery} />
-      </SearchLayout>
-      <ContentLayout>
-        <AstroObjectList />
-        {urlParams.uid && <AstroItem />}
-      </ContentLayout>
-    </RootLayout>
+    <ErrorBoundary>
+      <RootLayout>
+        <SearchLayout>
+          <Search searchQuery={searchQuery} />
+        </SearchLayout>
+        <ContentLayout>
+          <AstroObjectList />
+          {urlParams.uid && <AstroItem />}
+        </ContentLayout>
+      </RootLayout>
+    </ErrorBoundary>
   );
 }

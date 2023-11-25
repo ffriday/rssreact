@@ -8,22 +8,26 @@ import { useMySearchParams } from '../helpers/hooks';
 export default function AstroItem(): JSX.Element {
   const router = useRouter();
   const { uid } = useMySearchParams();
-  const  { data } = useGetItemQuery({ uid: uid }, {skip: router.isFallback});
+  const { data } = useGetItemQuery({ uid: uid }, { skip: router.isFallback });
 
   return (
     <section className="flex flex-col w-full mx-2">
-      {data === undefined || !data.astronomicalObject ? <MessageBox message="Error" /> :
-      <>
-            <AstroItemView
-        astronomicalObjectType={data.astronomicalObject.astronomicalObjectType}
-        name={data.astronomicalObject.name}
-        uid={data.astronomicalObject.uid}
-        location={data.astronomicalObject.location}
-      />
-      <AstroNeighbours obj={data.astronomicalObject.astronomicalObjects} />
-      <CloseItemView />
-      </>
-      }
+      {data === undefined || !data.astronomicalObject ? (
+        <MessageBox message="Error" />
+      ) : (
+        <>
+          <AstroItemView
+            astronomicalObjectType={
+              data.astronomicalObject.astronomicalObjectType
+            }
+            name={data.astronomicalObject.name}
+            uid={data.astronomicalObject.uid}
+            location={data.astronomicalObject.location}
+          />
+          <AstroNeighbours obj={data.astronomicalObject.astronomicalObjects} />
+          <CloseItemView />
+        </>
+      )}
     </section>
   );
 }

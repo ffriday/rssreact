@@ -1,17 +1,17 @@
 import { FormEvent } from 'react';
 import { QueryParams } from '../constants/types';
 import { useRouter } from 'next/router';
+import { useMySearchParams } from '../helpers/hooks';
 
 type TSearchProps = {
   searchQuery: string;
-  // urlParams: Record<string, string>;
 };
 
 export default function Search({
   searchQuery,
 }: TSearchProps): JSX.Element {
   const router = useRouter();
-  const { uid, pageSize, pageNumber } = router.query;
+  const { uid, pageSize } = useMySearchParams();
 
   const search = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -21,9 +21,9 @@ export default function Search({
       query: {
         uid,
         pageSize,
-        pageNumber,
+        pageNumber: 0,
       },
-    }, undefined, {shallow: true});
+    });
   };
 
   return (
