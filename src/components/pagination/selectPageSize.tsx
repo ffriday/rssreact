@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { LSKey, QueryParams } from '../constants/types';
 import { setPage, setPageSize, useAppDispatch, useAppSelector } from '../store';
 

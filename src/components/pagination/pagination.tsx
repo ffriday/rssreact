@@ -1,58 +1,49 @@
-import { Link, useSearchParams } from 'react-router-dom';
 import { SelectPageSize } from './selectPageSize';
-import {
-  nextPage,
-  prevPage,
-  setUid,
-  useAppDispatch,
-  useAppSelector,
-} from '../store';
-import { QueryParams } from '../constants/types';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useMySearchParams } from '../helpers/hooks';
+
+type TPagination = {
+  firstPage: boolean;
+  lastPage: boolean;
+};
 
 type TPageLink = {
   text: string;
-  action: typeof prevPage | typeof nextPage;
-  pageLink: 1 | 0 | -1;
+  pageLink: string;
 };
 
-export default function Pagination(): JSX.Element {
-  const { pageSize, pageNumber, firstPage, lastPage } = useAppSelector(
-    (state) => state.searchParams
-  );
-  const dispatch = useAppDispatch();
-  const [, setSearchParams] = useSearchParams();
+export default function Pagination({
+  firstPage,
+  lastPage,
+}: TPagination): JSX.Element {
+  const router = useRouter();
+  const { search, pageSize, pageNumber } = useMySearchParams();
 
   return (
     <nav
       onClick={() => {
-        dispatch(setUid(''));
-        setSearchParams({ uid: '', pageSize: pageSize.toString() });
+        // dispatch(setUid(''));
+        // setSearchParams({ uid: '', pageSize: pageSize.toString() });
       }}
       className="flex flex-row text-white p-2 items-center justify-center"
     >
-      <PageLink text="<-" action={prevPage} pageLink={firstPage ? 0 : -1} />
-      <p className="p-2">{pageNumber + 1}</p>
-      <PageLink text="->" action={nextPage} pageLink={lastPage ? 0 : 1} />
-      <SelectPageSize />
+      <PageLink text="<-" pageLink={firstPage ? 0 : -1} />
+      <p className="p-2">{+pageNumber + 1}</p>
+      <PageLink text="->" pageLink={lastPage ? 0 : 1} />
+      {/* <SelectPageSize /> */}
     </nav>
   );
 }
 
-function PageLink({ text, action, pageLink }: TPageLink): JSX.Element {
-  const { pageNumber, query, pageSize, uid } = useAppSelector(
-    (state) => state.searchParams
-  );
-  const dispatch = useAppDispatch();
-  const urlParams = `?${QueryParams.pageSize}=${pageSize}&${QueryParams.uid}=${uid}`;
-
+function PageLink({ text, pageLink }: TPageLink): JSX.Element {
   return (
     <Link
       onClick={(event) => {
-        dispatch(action());
         event.stopPropagation();
       }}
       className={'p-2 select-none'}
-      to={`/${pageNumber + pageLink}/${query}${urlParams}`}
+      href={pageLink}
     >
       {text}
     </Link>

@@ -18,6 +18,6 @@ export type TReducer = TStoreState["dispatch"];;
 export const useAppDispatch = () => useDispatch<TReducer>();
 export const useAppSelector: TypedUseSelectorHook<TStoreState> = useSelector;
 
-// const env = process.env.NODE_ENV;
-// export const wrapper = createWrapper<TStoreState>(makeStore, { debug: env === "development" });
-export const wrapper = createWrapper<TStoreState>(makeStore, { debug: false });
+const env = process.env.NODE_ENV;
+export const wrapper = createWrapper<TStoreState>(makeStore, { debug: env === "development" });
+// export const wrapper = createWrapper<TStoreState>(makeStore, { debug: false });

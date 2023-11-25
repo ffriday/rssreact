@@ -4,22 +4,20 @@ import { useRouter } from 'next/router';
 
 type TSearchProps = {
   searchQuery: string;
-  urlParams: Record<string, string>;
+  // urlParams: Record<string, string>;
 };
 
 export default function Search({
   searchQuery,
-  urlParams,
 }: TSearchProps): JSX.Element {
   const router = useRouter();
   const { uid, pageSize, pageNumber } = router.query;
 
   const search = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const url =
-      new FormData(event.currentTarget).get(QueryParams.searcInputName) || '';
+    const url = new FormData(event.currentTarget).get(QueryParams.searcInputName);
     router.push({
-      pathname: url.toString(),
+      pathname: url ? url.toString() : '/',
       query: {
         uid,
         pageSize,

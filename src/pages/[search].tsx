@@ -42,7 +42,7 @@ export default function HomeRoute({
   return (
     <RootLayout>
       <SearchLayout>
-        <Search searchQuery={searchQuery} urlParams={urlParams} />
+        <Search searchQuery={searchQuery} />
       </SearchLayout>
       <ContentLayout>
         <AstroObjectList />

@@ -36,19 +36,6 @@ export const api = createApi({
         page = '1',
       }) => ({
         url: `${apiEnv.endpoint}${apiEnv.search}?name=${query}&pageSize=${size}&pageNumber=${page}`,
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      }),
-    }),
-    addSearch: build.mutation<TSearchResponse, TSearchArgs>({
-      query: ({
-        query = '',
-        size = QueryParams.defaultPageSize,
-        page = '1',
-      }) => ({
-        url: `${apiEnv.endpoint}${apiEnv.search}?name=${query}&pageSize=${size}&pageNumber=${page}`,
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -58,5 +45,5 @@ export const api = createApi({
   }),
 });
 
-export const { useGetItemQuery, useGetSearchQuery,useAddSearchMutation, util: { getRunningQueriesThunk } } = api;
-export const { getItem, getSearch,addSearch } = api.endpoints;
+export const { useGetItemQuery, useGetSearchQuery, util: { getRunningQueriesThunk } } = api;
+export const { getItem, getSearch } = api.endpoints;

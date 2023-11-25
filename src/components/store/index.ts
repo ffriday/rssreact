@@ -1,4 +1,4 @@
-import { addSearch, getItem, getSearch, useGetItemQuery, useAddSearchMutation, getRunningQueriesThunk, useGetSearchQuery } from './api';
+import { getItem, getSearch, useGetItemQuery, getRunningQueriesThunk, useGetSearchQuery } from './api';
 import {
   wrapper,
   makeStore,
@@ -11,14 +11,12 @@ import {
 
 export {
   getRunningQueriesThunk,
-  addSearch,
   getItem,
   getSearch,
   wrapper,
   makeStore,
   useGetItemQuery,
   useGetSearchQuery,
-  useAddSearchMutation,
   useAppDispatch,
   useAppSelector,
 };

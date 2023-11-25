@@ -9,6 +9,8 @@ export default function AstroObjectList(): JSX.Element {
   const router = useRouter();
   const { uid: currentUid, pageSize, pageNumber, search } = useMySearchParams();
   const data = useDataLoad();
+  const firstPage = data?.page.firstPage ?? true;
+  const lastPage = data?.page.lastPage ?? true;
 
   const selectUid = (uid: string) => {
     if (uid) {
@@ -42,7 +44,7 @@ export default function AstroObjectList(): JSX.Element {
               />
             ))}
           </ul>
-          {/* <Pagination /> */}
+          {/* <Pagination firstPage lastPage /> */}
         </>
       )}
     </section>
