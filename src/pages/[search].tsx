@@ -1,6 +1,6 @@
 import AstroItem from '@/components/content/AstroItem';
 import AstroObjectList from '@/components/content/AstroObjectList';
-import ErrorBoundary from '@/components/error/ErrorBoundary';
+import FakeError from '@/components/error/fakeError';
 import { parseParam, getSearchParams } from '@/components/helpers/helpers';
 import { ContentLayout, RootLayout, SearchLayout } from '@/components/layout';
 import Search from '@/components/search/Search';
@@ -40,16 +40,15 @@ export default function HomeRoute({
   urlParams,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <ErrorBoundary>
       <RootLayout>
         <SearchLayout>
           <Search searchQuery={searchQuery} />
+          <FakeError />
         </SearchLayout>
         <ContentLayout>
           <AstroObjectList />
           {urlParams.uid && <AstroItem />}
         </ContentLayout>
       </RootLayout>
-    </ErrorBoundary>
   );
 }

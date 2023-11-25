@@ -1,5 +1,5 @@
-import { Component, ErrorInfo, ReactNode } from 'react';
 import ErrorMessage from '@/pages/404';
+import React, {ReactNode, ErrorInfo} from 'react'
 import { TErrorInfo } from '../constants/types';
 
 type TProps = {
@@ -10,30 +10,26 @@ type TState = {
   hasError: boolean;
 };
 
-export default class ErrorBoundary extends Component<TProps, TState> {
+class ErrorBoundary extends React.Component<TProps, TState> {
   constructor(props: TProps) {
-    super(props);
-    this.state = { hasError: false };
+    super(props)
+    this.state = { hasError: false }
   }
-
-  public state: TState = {
-    hasError: false,
-  };
-
-  static getDerivedStateFromError(): TState {
-    return { hasError: true };
+  static getDerivedStateFromError() {
+    return { hasError: true }
   }
-
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    this.setState({ hasError: true });
-    console.log(error, errorInfo);
+    console.log({ error, errorInfo })
   }
-
   render() {
     if (this.state.hasError) {
-      return <ErrorMessage message={TErrorInfo.sorry} />;
+      if (this.state.hasError) {
+        return <ErrorMessage message={TErrorInfo.sorry} />;
+      }
     }
-
-    return this.props.children;
+ 
+    return this.props.children
   }
 }
+ 
+export default ErrorBoundary
