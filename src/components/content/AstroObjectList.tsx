@@ -2,21 +2,24 @@ import MessageBox from '../messageBox/messageBox';
 import AstroObjectElement from './AstroObjectElement';
 import { TErrorInfo } from '../constants/types';
 import Pagination from '../pagination/pagination';
-import { setUid, useAppDispatch, useAppSelector } from '../store';
-import { useDataLoad } from '../helpers/hooks';
+import { useDataLoad, useMySearchParams } from '../helpers/hooks';
+import { useRouter } from 'next/router';
 
 export default function AstroObjectList(): JSX.Element {
-  const { pageSize, uid: currentUid } = useAppSelector(
-    (state) => state.searchParams
-  );
-  const [, setSearchParams] = useSearchParams();
-  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { uid: currentUid, pageSize, pageNumber, search } = useMySearchParams();
   const data = useDataLoad();
 
   const selectUid = (uid: string) => {
     if (uid) {
-      dispatch(setUid(uid));
-      setSearchParams({ uid, pageSize: pageSize.toString() });
+      router.push({
+        pathname: search,
+        query: {
+          uid,
+          pageSize,
+          pageNumber,
+        },
+      });
     }
   };
 
@@ -39,7 +42,7 @@ export default function AstroObjectList(): JSX.Element {
               />
             ))}
           </ul>
-          <Pagination />
+          {/* <Pagination /> */}
         </>
       )}
     </section>

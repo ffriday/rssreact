@@ -1,16 +1,15 @@
 import { TAstronomicalObject, WrappedAstroObject } from '../constants/types';
 import MessageBox from '../messageBox/messageBox';
 import { useGetItemQuery } from '../store';
-import { useMySearchParams } from '../helpers/hooks';
 import { useRouter } from 'next/router';
 import { parseParam } from '../helpers/helpers';
+import { skipToken } from '@reduxjs/toolkit/query';
+import { useMySearchParams } from '../helpers/hooks';
 
-type TAstroItem = {
-  uid: string;
-};
-
-export default function AstroItem({ uid }: TAstroItem): JSX.Element {
-  const { data } = useGetItemQuery({ uid: uid });
+export default function AstroItem(): JSX.Element {
+  const router = useRouter();
+  const uid = parseParam(router.query.uid);
+  const  { data } = useGetItemQuery({ uid: uid }, {skip: router.isFallback});
 
   if (data === undefined || !data.astronomicalObject) return <MessageBox message="Error" />;
 
@@ -67,11 +66,11 @@ function AstroNeighbours({ obj }: { obj: TAstronomicalObject[] }): JSX.Element {
 
 function CloseItemView(): JSX.Element {
   const router = useRouter();
-  const { pageSize, pageNumber } = router.query;
+  const { search, pageSize, pageNumber } = useMySearchParams();
 
   const close = () =>
     router.push({
-      pathname: parseParam(router.query.search),
+      pathname: search,
       query: {
         uid: '',
         pageSize,

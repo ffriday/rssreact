@@ -1,11 +1,12 @@
 import AstroItem from '@/components/content/AstroItem';
+import AstroObjectList from '@/components/content/AstroObjectList';
 import { parseParam, getSearchParams } from '@/components/helpers/helpers';
 import { ContentLayout, RootLayout, SearchLayout } from '@/components/layout';
 import Search from '@/components/search/Search';
 import {
-  addSearch,
   getItem,
   getRunningQueriesThunk,
+  getSearch,
   wrapper,
 } from '@/components/store';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
@@ -20,7 +21,7 @@ export const getServerSideProps: GetServerSideProps<THomeProps> =
     const search = parseParam(query.search);
     const urlParams = getSearchParams(query);
     store.dispatch(
-      addSearch.initiate({
+      getSearch.initiate({
         query: search,
         size: urlParams.pageSize,
         page: urlParams.pageNumber,
@@ -44,7 +45,8 @@ export default function HomeRoute({
         <Search searchQuery={searchQuery} urlParams={urlParams} />
       </SearchLayout>
       <ContentLayout>
-        {urlParams.uid && <AstroItem uid={urlParams.uid}/>}
+        <AstroObjectList />
+        {urlParams.uid && <AstroItem />}
       </ContentLayout>
     </RootLayout>
   );
