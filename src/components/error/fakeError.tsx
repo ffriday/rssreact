@@ -1,14 +1,12 @@
-import { TErrorInfo } from "../constants/types";
-import {useState} from 'react';
+import { TErrorInfo } from '../constants/types';
+import { useState } from 'react';
 
 export default function FakeError(): JSX.Element {
   const [isFakeError, setIsFakeError] = useState(false);
 
   const fakeError = () => {
     try {
-      {
-        throw new Error(TErrorInfo.testError);
-      }
+      throw new Error(TErrorInfo.testError);
     } catch (error) {
       if (error instanceof Error) setIsFakeError(true);
     }
