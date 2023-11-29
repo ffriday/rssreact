@@ -8,7 +8,9 @@ export const RootLayout = () => {
       className={`flex flex-col justify-top h-full w-full font-mono px-1 sm:px-3 ${Style.bgColor} ${Style.textColor}`}
     >
       <Header />
-      <main className={`flex flex-row justify-top w-full font-mono`}>
+      <main
+        className={`flex sm:flex-row flex-col justify-top w-full font-mono`}
+      >
         <Outlet />
       </main>
       <footer className={`w-full h-12`} />

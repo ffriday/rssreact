@@ -1,9 +1,9 @@
-import { Link, useParams } from 'react-router-dom';
-import { Links, Style, navLinks } from '../constants';
+import { Link } from 'react-router-dom';
+import { Style, navLinks } from '../constants';
+import { useUrlParams } from '../helpers/hooks';
 
 export const Header = () => {
-  const { page } = useParams();
-  const currentPage = page || Links.home;
+  const { page } = useUrlParams();
 
   return (
     <header className="flex sm:flex-row flex-col sm:gap-10 gap-1">
@@ -14,7 +14,7 @@ export const Header = () => {
             key={link}
             to={link}
             className={`flex items-end ${Style.textHover}${
-              currentPage === link ? ` ${Style.textActive}` : ''
+              page === link ? ` ${Style.textActive}` : ''
             }`}
           >
             {text}

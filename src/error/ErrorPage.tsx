@@ -1,3 +1,7 @@
-export const ErrorPage = () => {
-  return <h1>Error Page</h1>;
+type TErrorPage = {
+  message?: string;
+};
+
+export const ErrorPage = ({ message = 'Oops, error!' }: TErrorPage) => {
+  return <p>{message}</p>;
 };

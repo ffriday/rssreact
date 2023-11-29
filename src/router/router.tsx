@@ -5,19 +5,26 @@ import {
 } from 'react-router-dom';
 import { RootLayout } from '../layouts/rootLayout';
 import { ErrorPage } from '../error/ErrorPage';
-import { Container } from '../container/container';
-import { QueryParams } from '../constants';
+import { Links } from '../constants';
+import { FormView } from '../userData/formView';
+import { UsualForm } from '../form/usualForm';
+import { HookForm } from '../form/hookForm';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
-      <Route index element={<Container />} errorElement={<ErrorPage />} />
+      <Route index element={<FormView />} errorElement={<ErrorPage />} />
       <Route
-        path={`/:${QueryParams.page}`}
-        element={<Container />}
+        path={`/${Links.usualForm}`}
+        element={<UsualForm />}
         errorElement={<ErrorPage />}
       />
-      <Route path="/*" element={<ErrorPage />} />
+      <Route
+        path={`/${Links.hookForm}`}
+        element={<HookForm />}
+        errorElement={<ErrorPage />}
+      />
+      <Route path="/*" element={<ErrorPage message="Page not found" />} />
     </Route>
   )
 );

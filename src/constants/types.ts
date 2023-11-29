@@ -1,5 +1,5 @@
 export enum Links {
-  home = 'home',
+  home = '',
   usualForm = 'usual-form',
   hookForm = 'hook-form',
 }
