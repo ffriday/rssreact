@@ -7,6 +7,12 @@ const createFormSlice = (name: string) =>
     initialState: {
       name: '',
       age: 0,
+      email: '',
+      password: '',
+      country: '',
+      gender: '',
+      agree: '',
+      image: '',
     },
     reducers: {
       updateData(state, action: PayloadAction<TFormData>) {

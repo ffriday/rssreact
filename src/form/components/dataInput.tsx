@@ -6,9 +6,10 @@ type TDataInput = {
     defaultValue: string;
   };
   message: string;
+  onChange?: (value: string) => void;
 };
 
-export const DataInput = ({ props, message }: TDataInput) => {
+export const DataInput = ({ props, message, onChange }: TDataInput) => {
   const errorStyle = message ? ' border-red-400' : '';
   return (
     <div className="flex flex-col justify-start w-full">
@@ -17,9 +18,10 @@ export const DataInput = ({ props, message }: TDataInput) => {
       </label>
       <input
         {...props}
-        className={`text-gray-900 placeholder-current::placeholder rounded border-2${errorStyle}`}
+        onChange={(event) => onChange && onChange(event.currentTarget.value)}
+        className={`text-gray-900 placeholder-current::placeholder h-8 rounded border-2${errorStyle}`}
       ></input>
-      <p className="text-left first-letter:capitalize h-4 w-full text-sm">
+      <p className="text-left first-letter:capitalize sm:h-4 h-8 w-full text-sm">
         {message}
       </p>
     </div>

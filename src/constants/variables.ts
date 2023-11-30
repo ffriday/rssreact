@@ -18,8 +18,18 @@ export const inputs = {
     placeholder: 'Age',
   },
   email: {
-    type: 'email',
+    type: 'text',
     name: 'email',
     placeholder: 'Email',
+  },
+  password: {
+    type: 'password',
+    name: 'password',
+    placeholder: 'Password',
+  },
+  confirm: {
+    type: 'password',
+    name: 'confirm',
+    placeholder: 'Confirm password',
   },
 };

@@ -11,12 +11,14 @@ import {
   fillSchema,
   formSchema,
 } from './components';
-import { getValidationErrors } from '../helpers/functions';
+import { findError, getValidationErrors } from '../helpers/functions';
+import { FormNames } from '../constants/types';
 
 export const UsualForm = () => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.componentReducer);
   const [errors, setErrors] = useState<ValidationError>();
+  const [confirmError, setConfirmError] = useState(true);
 
   const inputStyle = 'text-gray-900 placeholder-current::placeholder';
 
@@ -24,7 +26,9 @@ export const UsualForm = () => {
     event.preventDefault();
     const data = fillSchema(event.currentTarget);
     const valid = await formSchema.isValid(data);
-    if (valid) {
+    const pwdMatches = data.password === data.confirm;
+    setConfirmError(pwdMatches);
+    if (valid && pwdMatches) {
       dispatch(updateComponentData(formSchema.cast(data)));
       setErrors(new ValidationError(''));
     } else {
@@ -39,27 +43,28 @@ export const UsualForm = () => {
       </h2>
       <form
         onSubmit={sumbit}
-        className="flex flex-col items-start min-w-min w-2/3 gap-2"
+        className="flex flex-col items-start min-w-min w-4/5 gap-2"
       >
         <DataInput
           props={{ ...inputs.name, defaultValue: data.name }}
-          message={errors?.errors[0] || ''}
+          message={findError(errors, FormNames.name)}
         />
         <DataInput
           props={{ ...inputs.age, defaultValue: data.age.toString() }}
-          message={errors?.errors[1] || ''}
+          message={findError(errors, FormNames.age)}
         />
-        <input type="email" placeholder="Email" className={inputStyle}></input>
-        <input
-          type="password"
-          placeholder="Password"
-          className={inputStyle}
-        ></input>
-        <input
-          type="password"
-          placeholder="Confirm password"
-          className={inputStyle}
-        ></input>
+        <DataInput
+          props={{ ...inputs.email, defaultValue: data.email }}
+          message={findError(errors, FormNames.email)}
+        />
+        <DataInput
+          props={{ ...inputs.password, defaultValue: data.password }}
+          message={findError(errors, FormNames.password)}
+        />
+        <DataInput
+          props={{ ...inputs.confirm, defaultValue: '' }}
+          message={!confirmError ? 'Password not match' : ''}
+        />
         <input
           type="country"
           placeholder="Country"

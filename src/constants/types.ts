@@ -25,4 +25,11 @@ export enum QueryParams {
 export enum FormNames {
   name = 'name',
   age = 'age',
+  email = 'email',
+  password = 'password',
+  confirm = 'confirm',
+  gender = 'gender',
+  country = 'country',
+  agree = 'agree',
+  image = 'image',
 }
