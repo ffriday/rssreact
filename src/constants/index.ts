@@ -1,4 +1,5 @@
-import { Links, Style, QueryParams } from './types';
-import { navLinks } from './variables';
+import { Links, Style, QueryParams, TFormData } from './types';
+import { navLinks, inputs } from './variables';
 
-export { Links, Style, QueryParams, navLinks };
+export { Links, Style, QueryParams, navLinks, inputs };
+export type { TFormData };

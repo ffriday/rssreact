@@ -1,3 +1,8 @@
+export type TFormData = {
+  name: string;
+  age: number;
+};
+
 export enum Links {
   home = '',
   componentForm = 'component-form',

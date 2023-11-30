@@ -1,15 +1,25 @@
-import { navLinks } from '../constants';
+import { useState } from 'react';
+import { ValidationError } from 'yup';
+import { inputs, navLinks } from '../constants';
 import { FormNames } from '../constants/types';
 import { updateComponentData } from '../store';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { AgreeCheckbox, SubmitButton } from './components';
-import { GenderSelector } from './components/genderSelector';
-import { fillSchema, formSchema } from './components/schema';
+import {
+  AgreeCheckbox,
+  SubmitButton,
+  DataInput,
+  GenderSelector,
+  fillSchema,
+  formSchema,
+} from './components';
+import { getValidationErrors } from '../helpers/functions';
 
 export const UsualForm = () => {
-  const inputStyle = 'text-gray-900 placeholder-current::placeholder';
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.componentReducer);
+  const [errors, setErrors] = useState<ValidationError>();
+
+  const inputStyle = 'text-gray-900 placeholder-current::placeholder';
 
   const sumbit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -18,7 +28,7 @@ export const UsualForm = () => {
     if (valid) {
       dispatch(updateComponentData(formSchema.cast(data)));
     } else {
-      console.log('WRONG'); //TODO
+      setErrors(await getValidationErrors(data));
     }
   };
 
@@ -31,6 +41,10 @@ export const UsualForm = () => {
         onSubmit={sumbit}
         className="flex flex-col items-start min-w-min w-2/3 gap-2"
       >
+        <DataInput
+          props={{ ...inputs.name, defaultValue: data.name }}
+          message={errors?.errors[0] || ''}
+        />
         <input
           type="text"
           name={FormNames.name}

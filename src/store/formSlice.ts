@@ -1,9 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-export type TFormData = {
-  name: string;
-  age: number;
-};
+import { TFormData } from '../constants';
 
 const createFormSlice = (name: string) =>
   createSlice({
