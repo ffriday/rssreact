@@ -9,7 +9,7 @@ export const RootLayout = () => {
     >
       <Header />
       <main
-        className={`flex sm:flex-row flex-col justify-top w-full font-mono`}
+        className={`flex sm:flex-row flex-col justify-around justify-top w-full font-mono`}
       >
         <Outlet />
       </main>

@@ -1,8 +1,6 @@
-import { useParams } from 'react-router-dom';
-import { Links } from '../constants';
+import { useLocation } from 'react-router-dom';
 
-export const useUrlParams = () => {
-  const { page: currentPage } = useParams();
-  const page = currentPage || Links.home;
-  return { page };
+export const useCurrentPage = () => {
+  const { pathname } = useLocation();
+  return pathname.replace('/', '');
 };

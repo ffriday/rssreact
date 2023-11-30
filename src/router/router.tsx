@@ -15,7 +15,7 @@ export const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />} errorElement={<ErrorPage />}>
       <Route index element={<FormView />} errorElement={<ErrorPage />} />
       <Route
-        path={`/${Links.usualForm}`}
+        path={`/${Links.componentForm}`}
         element={<UsualForm />}
         errorElement={<ErrorPage />}
       />

@@ -2,6 +2,6 @@ import { Links } from './types';
 
 export const navLinks = [
   [Links.home, 'Home'],
-  [Links.usualForm, 'Usual form'],
+  [Links.componentForm, 'Component form'],
   [Links.hookForm, 'Hook form'],
 ];
