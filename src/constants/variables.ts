@@ -6,13 +6,20 @@ export const navLinks = [
   [Links.hookForm, 'Hook form'],
 ];
 
-const inputStyle = 'text-gray-900 placeholder-current::placeholder';
-
 export const inputs = {
   name: {
-    type: 'name',
+    type: 'text',
     name: 'name',
     placeholder: 'Name',
-    className: inputStyle,
+  },
+  age: {
+    type: 'number',
+    name: 'age',
+    placeholder: 'Age',
+  },
+  email: {
+    type: 'email',
+    name: 'email',
+    placeholder: 'Email',
   },
 };

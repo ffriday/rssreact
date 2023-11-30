@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ValidationError } from 'yup';
 import { inputs, navLinks } from '../constants';
-import { FormNames } from '../constants/types';
 import { updateComponentData } from '../store';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import {
@@ -27,6 +26,7 @@ export const UsualForm = () => {
     const valid = await formSchema.isValid(data);
     if (valid) {
       dispatch(updateComponentData(formSchema.cast(data)));
+      setErrors(new ValidationError(''));
     } else {
       setErrors(await getValidationErrors(data));
     }
@@ -45,20 +45,10 @@ export const UsualForm = () => {
           props={{ ...inputs.name, defaultValue: data.name }}
           message={errors?.errors[0] || ''}
         />
-        <input
-          type="text"
-          name={FormNames.name}
-          placeholder="Name"
-          defaultValue={data.name}
-          className={inputStyle}
-        ></input>
-        <input
-          type="number"
-          name={FormNames.age}
-          placeholder="Age"
-          defaultValue={data.age}
-          className={inputStyle}
-        ></input>
+        <DataInput
+          props={{ ...inputs.age, defaultValue: data.age.toString() }}
+          message={errors?.errors[1] || ''}
+        />
         <input type="email" placeholder="Email" className={inputStyle}></input>
         <input
           type="password"

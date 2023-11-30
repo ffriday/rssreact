@@ -2,23 +2,21 @@ import { object, string, number, setLocale } from 'yup';
 import { FormNames } from '../../constants/types';
 
 setLocale({
-  string: {
-    matches(params) {
-      if (
-        params.regex.source === /^[A-Z][a-z]*$/.source &&
-        params.regex.flags === /^[A-Z][a-z]*$/.flags
-      ) {
-        return 'Must start from uppercase letter';
-      }
-    },
-  },
+  number: {},
 });
 
 export const formSchema = object({
   name: string()
-    .matches(/^[A-Z][a-z]*$/, { excludeEmptyString: true })
+    .matches(/^[A-Z][a-zA-Z]*$/, {
+      excludeEmptyString: true,
+      message: 'Must start from uppercase letter',
+    })
     .required(),
-  age: number().required(),
+  age: number()
+    .typeError('Must be a number')
+    .min(0, 'Must be higher then 0')
+    .integer('Must be an integer')
+    .required(),
   email: string().email(),
 });
 
