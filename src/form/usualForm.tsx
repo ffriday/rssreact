@@ -10,9 +10,10 @@ import {
   GenderSelector,
   fillSchema,
   formSchema,
+  ImageUpload,
 } from './components';
 import { findError, getValidationErrors } from '../helpers/functions';
-import { FormNames } from '../constants/types';
+import { FormNames, TFormData } from '../constants/types';
 import { CountrySelect } from './components/countrySelect';
 
 export const UsualForm = () => {
@@ -28,7 +29,7 @@ export const UsualForm = () => {
     const pwdMatches = data.password === data.confirm;
     setConfirmError(pwdMatches);
     if (valid && pwdMatches) {
-      dispatch(updateComponentData(formSchema.cast(data)));
+      dispatch(updateComponentData(formSchema.cast(data) as TFormData));
       setErrors(new ValidationError(''));
     } else {
       setErrors(await getValidationErrors(data));
@@ -75,7 +76,11 @@ export const UsualForm = () => {
           defaultValue={data.gender}
           message={findError(errors, FormNames.gender)}
         />
-        <input type="file" name="image" />
+        <ImageUpload
+          {...inputs.image}
+          defaultValue={data.image}
+          message={findError(errors, FormNames.image)}
+        />
         <AgreeCheckbox
           {...inputs.accept}
           defaultValue={data.accept}

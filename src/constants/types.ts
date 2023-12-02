@@ -1,13 +1,25 @@
+export enum FormNames {
+  name = 'name',
+  age = 'age',
+  email = 'email',
+  password = 'password',
+  confirm = 'confirm',
+  gender = 'gender',
+  country = 'country',
+  image = 'image',
+  accept = 'accept',
+}
+
 export type TFormData = {
-  name: string;
-  age: number;
-  email: string;
-  password: string;
-  country: string;
-  gender: string;
-  confirm: string;
-  image: string;
-  accept: string;
+  [FormNames.name]: string;
+  [FormNames.age]: number;
+  [FormNames.email]: string;
+  [FormNames.password]: string;
+  [FormNames.country]: string;
+  [FormNames.gender]: string;
+  [FormNames.confirm]: string;
+  [FormNames.image]: string;
+  [FormNames.accept]: string;
 };
 
 type TProps = {
@@ -44,16 +56,4 @@ export enum Style {
 
 export enum QueryParams {
   page = 'page',
-}
-
-export enum FormNames {
-  name = 'name',
-  age = 'age',
-  email = 'email',
-  password = 'password',
-  confirm = 'confirm',
-  gender = 'gender',
-  country = 'country',
-  image = 'image',
-  accept = 'accept',
 }

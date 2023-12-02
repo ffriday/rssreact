@@ -1,4 +1,4 @@
-import { object, string, number, setLocale } from 'yup';
+import { object, string, number, setLocale, mixed } from 'yup';
 import { FormNames } from '../constants/types';
 import { countries } from '../constants';
 
@@ -29,17 +29,37 @@ export const formSchema = object({
     .required()
     .test({
       name: 'inCountryList',
-      test(value, err) {
-        if (value && countries.filter(({ name }) => value === name).length) {
+      message: 'Must be from list',
+      test(value) {
+        if (value && countries.filter(({ name }) => value === name).length)
           return true;
-        } else {
-          return err.createError({ message: 'Must be from list' });
-        }
+        return false;
       },
     }),
   [FormNames.gender]: string().required(),
   [FormNames.confirm]: string().required(),
-  [FormNames.image]: string().required(),
+  [FormNames.image]: mixed()
+    .required()
+    .test({
+      name: 'size',
+      message: 'Must be less then 1mb',
+      test(value) {
+        if (value instanceof File && value.size <= 1000000) return true;
+        return false;
+      },
+    })
+    .test({
+      name: 'extension',
+      message: 'Must be png or jpeg',
+      test(value) {
+        if (
+          value instanceof File &&
+          (value.type === 'image/jpeg' || value.type === 'image/png')
+        )
+          return true;
+        return false;
+      },
+    }),
   [FormNames.accept]: string().required(),
 });
 

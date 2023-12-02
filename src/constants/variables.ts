@@ -55,6 +55,12 @@ export const inputs = {
     id: FormNames.accept,
     placeholder: 'Gender',
   },
+  [FormNames.image]: {
+    type: 'file',
+    name: FormNames.image,
+    id: FormNames.image,
+    placeholder: 'Upload image',
+  },
 };
 
 export const countries = [
