@@ -1,17 +1,9 @@
-import { FormNames } from '../../constants/types';
+import { FormNames, TDataProps } from '../../constants/types';
 import { useAppSelector } from '../../store/store';
 
-type TCountrySelect = {
-  message: string;
-};
-
-export const CountrySelect = ({ message }: TCountrySelect) => {
+export const CountrySelect = ({ message, ...rest }: TDataProps) => {
   const errorStyle = message ? ' border-red-400' : '';
   const data = useAppSelector((state) => state.countryReducer);
-
-  const change = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.currentTarget.value);
-  };
 
   return (
     <div className="flex flex-col align-top w-full">
@@ -19,10 +11,7 @@ export const CountrySelect = ({ message }: TCountrySelect) => {
         Country:
       </label>
       <input
-        type="text"
-        name={FormNames.country}
-        id={FormNames.country}
-        onChange={change}
+        {...rest}
         list="countryList"
         className={`text-gray-900 placeholder-black::placeholder h-8 rounded border-2${errorStyle}`}
       />

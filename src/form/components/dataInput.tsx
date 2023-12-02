@@ -1,13 +1,4 @@
-type TDataInput = {
-  props: {
-    type: string;
-    name: string;
-    placeholder: string;
-    defaultValue: string;
-  };
-  message: string;
-  onChange?: (value: string) => void;
-};
+import { TDataInput } from '../../constants';
 
 export const DataInput = ({ props, message, onChange }: TDataInput) => {
   const errorStyle = message ? ' border-red-400' : '';

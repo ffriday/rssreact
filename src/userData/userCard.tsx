@@ -8,7 +8,7 @@ export const UserCard = ({
   password,
   country,
   gender,
-  confirm,
+  accept,
   image,
 }: TFormData) => {
   return (
@@ -19,7 +19,7 @@ export const UserCard = ({
       <CardItem caption="Password" text={password} />
       <CardItem caption="Country" text={country} />
       <CardItem caption="Gender" text={gender} />
-      <CardItem caption="T&C confirmed" text={confirm} />
+      <CardItem caption="T&C confirmed" text={accept} />
       <CardItem caption="Image" text={image} />
     </section>
   );

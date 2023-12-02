@@ -62,13 +62,25 @@ export const UsualForm = () => {
           message={findError(errors, FormNames.password)}
         />
         <DataInput
-          props={{ ...inputs.confirm, defaultValue: '' }}
+          props={{ ...inputs.confirm, defaultValue: data.password }}
           message={!confirmError ? 'Password not match' : ''}
         />
-        <CountrySelect message={findError(errors, FormNames.country)} />
-        <GenderSelector message={findError(errors, FormNames.gender)} />
+        <CountrySelect
+          {...inputs.country}
+          defaultValue={data.country}
+          message={findError(errors, FormNames.country)}
+        />
+        <GenderSelector
+          {...inputs.gender}
+          defaultValue={data.gender}
+          message={findError(errors, FormNames.gender)}
+        />
         <input type="file" name="image" />
-        <AgreeCheckbox message={findError(errors, FormNames.confirm)} />
+        <AgreeCheckbox
+          {...inputs.accept}
+          defaultValue={data.accept}
+          message={findError(errors, FormNames.accept)}
+        />
         <SubmitButton />
       </form>
     </section>

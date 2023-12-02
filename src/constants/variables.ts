@@ -10,32 +10,50 @@ export const inputs = {
   [FormNames.name]: {
     type: 'text',
     name: FormNames.name,
+    id: FormNames.name,
     placeholder: 'Name',
   },
   [FormNames.age]: {
     type: 'number',
     name: FormNames.age,
+    id: FormNames.age,
     placeholder: 'Age',
   },
   [FormNames.email]: {
     type: 'text',
     name: FormNames.email,
+    id: FormNames.email,
     placeholder: 'Email',
   },
   [FormNames.password]: {
     type: 'password',
     name: FormNames.password,
+    id: FormNames.password,
     placeholder: 'Password',
-  },
-  [FormNames.country]: {
-    type: 'text',
-    name: FormNames.country,
-    placeholder: 'Country',
   },
   [FormNames.confirm]: {
     type: 'password',
     name: FormNames.confirm,
+    id: FormNames.confirm,
     placeholder: 'Confirm password',
+  },
+  [FormNames.country]: {
+    type: 'text',
+    name: FormNames.country,
+    id: FormNames.country,
+    placeholder: 'Country',
+  },
+  [FormNames.gender]: {
+    type: 'radio',
+    name: FormNames.gender,
+    id: FormNames.gender,
+    placeholder: 'Gender',
+  },
+  [FormNames.accept]: {
+    type: 'checkbox',
+    name: FormNames.accept,
+    id: FormNames.accept,
+    placeholder: 'Gender',
   },
 };
 

@@ -1,18 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { countries, TFormData } from '../constants';
+import { FormNames } from '../constants/types';
 
 const createFormSlice = (name: string) =>
   createSlice({
     name,
     initialState: {
-      name: '',
-      age: 0,
-      email: '',
-      password: '',
-      country: '',
-      gender: '',
-      confirm: '',
-      image: '',
+      [FormNames.name]: '',
+      [FormNames.age]: 0,
+      [FormNames.email]: '',
+      [FormNames.password]: '',
+      [FormNames.country]: '',
+      [FormNames.gender]: '',
+      [FormNames.confirm]: '',
+      [FormNames.image]: '',
+      [FormNames.accept]: '',
     },
     reducers: {
       updateData(state, action: PayloadAction<TFormData>) {

@@ -1,5 +1,6 @@
 import { object, string, number, setLocale } from 'yup';
 import { FormNames } from '../constants/types';
+import { countries } from '../constants';
 
 setLocale({
   number: {},
@@ -24,22 +25,31 @@ export const formSchema = object({
       message: 'Must contain number, uppercase, lowercased, special character',
     })
     .required(),
-  [FormNames.country]: string().required(),
+  [FormNames.country]: string()
+    .required()
+    .test({
+      name: 'inCountryList',
+      test(value, err) {
+        if (value && countries.filter(({ name }) => value === name).length) {
+          return true;
+        } else {
+          return err.createError({ message: 'Must be from list' });
+        }
+      },
+    }),
   [FormNames.gender]: string().required(),
   [FormNames.confirm]: string().required(),
   [FormNames.image]: string().required(),
+  [FormNames.accept]: string().required(),
 });
 
 export const fillSchema = (target: EventTarget & HTMLFormElement) => {
   const formData = new FormData(target);
-  return {
-    [FormNames.name]: formData.get(FormNames.name) ?? '',
-    [FormNames.age]: formData.get(FormNames.age) ?? '',
-    [FormNames.email]: formData.get(FormNames.email) ?? '',
-    [FormNames.password]: formData.get(FormNames.password) ?? '',
-    [FormNames.country]: formData.get(FormNames.country) ?? '',
-    [FormNames.gender]: formData.get(FormNames.gender) ?? '',
-    [FormNames.confirm]: formData.get(FormNames.confirm) ?? '',
-    [FormNames.image]: formData.get(FormNames.image) ?? '',
-  };
+  return Object.values(FormNames).reduce<Record<string, FormDataEntryValue>>(
+    (acc, val) => {
+      acc[val] = formData.get(val) ?? '';
+      return acc;
+    },
+    {}
+  );
 };

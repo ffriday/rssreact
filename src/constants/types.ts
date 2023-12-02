@@ -7,7 +7,25 @@ export type TFormData = {
   gender: string;
   confirm: string;
   image: string;
+  accept: string;
 };
+
+type TProps = {
+  type: string;
+  name: string;
+  id: string;
+  defaultValue: string;
+  placeholder: string;
+};
+
+export type TDataInput = {
+  props: TProps;
+  message: string;
+  onChange?: (value: string) => void;
+};
+
+export type TDataProps = Omit<TProps, 'placeholder'> &
+  Omit<TDataInput, 'props' | 'onChange'>;
 
 export enum Links {
   home = '',
@@ -37,4 +55,5 @@ export enum FormNames {
   gender = 'gender',
   country = 'country',
   image = 'image',
+  accept = 'accept',
 }
