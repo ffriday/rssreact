@@ -1,6 +1,12 @@
 export type TFormData = {
   name: string;
   age: number;
+  email: string;
+  password: string;
+  country: string;
+  gender: string;
+  confirm: string;
+  image: string;
 };
 
 export enum Links {
@@ -30,6 +36,5 @@ export enum FormNames {
   confirm = 'confirm',
   gender = 'gender',
   country = 'country',
-  agree = 'agree',
   image = 'image',
 }

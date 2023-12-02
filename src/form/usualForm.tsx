@@ -13,14 +13,13 @@ import {
 } from './components';
 import { findError, getValidationErrors } from '../helpers/functions';
 import { FormNames } from '../constants/types';
+import { CountrySelect } from './components/countrySelect';
 
 export const UsualForm = () => {
   const dispatch = useAppDispatch();
   const data = useAppSelector((state) => state.componentReducer);
   const [errors, setErrors] = useState<ValidationError>();
   const [confirmError, setConfirmError] = useState(true);
-
-  const inputStyle = 'text-gray-900 placeholder-current::placeholder';
 
   const sumbit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -34,6 +33,7 @@ export const UsualForm = () => {
     } else {
       setErrors(await getValidationErrors(data));
     }
+    console.log(data);
   };
 
   return (
@@ -65,14 +65,10 @@ export const UsualForm = () => {
           props={{ ...inputs.confirm, defaultValue: '' }}
           message={!confirmError ? 'Password not match' : ''}
         />
-        <input
-          type="country"
-          placeholder="Country"
-          className={inputStyle}
-        ></input>
-        <GenderSelector />
-        <input type="image" />
-        <AgreeCheckbox />
+        <CountrySelect message={findError(errors, FormNames.country)} />
+        <GenderSelector message={findError(errors, FormNames.gender)} />
+        <input type="file" name="image" />
+        <AgreeCheckbox message={findError(errors, FormNames.confirm)} />
         <SubmitButton />
       </form>
     </section>
