@@ -3,5 +3,5 @@ type TErrorPage = {
 };
 
 export const ErrorPage = ({ message = 'Oops, error!' }: TErrorPage) => {
-  return <p>{message}</p>;
+  return <p className="p-2 text-red-600">{message}</p>;
 };
