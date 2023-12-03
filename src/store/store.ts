@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { componentReducer, countryReducer } from './formSlice';
+import { componentReducer, countryReducer, updateReducer } from './';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 export const store = configureStore({
   reducer: {
     componentReducer,
     countryReducer,
+    updateReducer,
   },
 });
 

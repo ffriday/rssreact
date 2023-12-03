@@ -1,5 +1,11 @@
+import { useEffect } from 'react';
 import { TFormData } from '../constants';
+import { removeCard, useAppDispatch } from '../store';
 import { CardItem } from './cardItem';
+
+type TUserCard = TFormData & {
+  first?: boolean;
+};
 
 export const UserCard = ({
   name,
@@ -10,11 +16,21 @@ export const UserCard = ({
   gender,
   accept,
   image,
-}: TFormData) => {
+  first,
+}: TUserCard) => {
+  const dispatch = useAppDispatch();
   const img = new Image();
   img.src = image;
+
+  useEffect(() => {
+    if (first) window.setTimeout(() => dispatch(removeCard()), 5000);
+  }, [dispatch, first]);
+  const updatedStyle = first ? ' border-green-500' : '';
+
   return (
-    <div className="flex flex-col items-start align-top p-3 border rounded sm:w-3/4 md:w-2/3 lg:w-1/2 w-2/3">
+    <div
+      className={`flex flex-col items-start align-top p-3 border rounded sm:w-3/4 md:w-2/3 lg:w-1/2 w-2/3${updatedStyle}`}
+    >
       <CardItem caption="Name" text={name} />
       <CardItem caption="Age" text={age.toString()} />
       <CardItem caption="Email" text={email} />

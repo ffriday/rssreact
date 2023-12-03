@@ -21,7 +21,22 @@ const countrySlice = createSlice({
   reducers: {},
 });
 
+const updateSlice = createSlice({
+  name: 'updateSlice',
+  initialState: { updated: false },
+  reducers: {
+    add(state) {
+      state.updated = true;
+    },
+    remove(state) {
+      state.updated = false;
+    },
+  },
+});
+
 export const { reducer: componentReducer } = componentSlice;
 export const { reducer: countryReducer } = countrySlice;
+export const { reducer: updateReducer } = updateSlice;
 
 export const { updateData: updateComponentData } = componentSlice.actions;
+export const { add: addCard, remove: removeCard } = updateSlice.actions;

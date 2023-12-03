@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ValidationError } from 'yup';
 import { inputs, navLinks, FormNames, Links } from '../constants';
-import { updateComponentData, useAppDispatch } from '../store';
+import { addCard, updateComponentData, useAppDispatch } from '../store';
 import {
   AgreeCheckbox,
   SubmitButton,
@@ -31,6 +31,7 @@ export const UsualForm = () => {
         image: ((await toBase64(validated.image)) ?? '').toString(),
       };
       dispatch(updateComponentData(next));
+      dispatch(addCard());
       setErrors(new ValidationError(''));
       navigate(`/${Links.home}`);
     } else {

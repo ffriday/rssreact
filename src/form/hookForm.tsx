@@ -11,7 +11,7 @@ import {
 } from './components';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Links, TFormValidate } from '../constants/types';
-import { updateComponentData, useAppDispatch } from '../store';
+import { addCard, updateComponentData, useAppDispatch } from '../store';
 import { useNavigate } from 'react-router-dom';
 import { toBase64 } from '../helpers';
 
@@ -35,6 +35,7 @@ export const HookForm = () => {
         image: ((await toBase64(validated.image)) ?? '').toString(),
       };
       dispatch(updateComponentData(next));
+      dispatch(addCard());
       navigate(`/${Links.home}`);
     }
   };
