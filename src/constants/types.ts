@@ -22,6 +22,10 @@ export type TFormData = {
   [FormNames.accept]: string;
 };
 
+export type TFormValidate = Omit<TFormData, FormNames.image> & {
+  [FormNames.image]: File;
+};
+
 type TProps = {
   type: string;
   name: string;

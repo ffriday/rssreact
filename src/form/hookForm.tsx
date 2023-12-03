@@ -1,10 +1,21 @@
-import { navLinks } from '../constants';
-import { DataInput, SubmitButton } from './components';
+import { useForm } from 'react-hook-form';
+import { FormNames, inputs, navLinks } from '../constants';
+import { DataInput, SubmitButton, formSchema } from './components';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { TFormValidate } from '../constants/types';
 
 export const HookForm = () => {
-  const submit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    console.log(event);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TFormValidate>({
+    mode: 'onChange',
+    resolver: yupResolver(formSchema),
+  });
+
+  const submit = (data: TFormValidate) => {
+    console.log(data);
   };
 
   return (
@@ -13,17 +24,12 @@ export const HookForm = () => {
         {navLinks[2][1]}
       </h2>
       <form
-        onSubmit={submit}
+        onSubmit={handleSubmit(submit)}
         className="flex flex-col items-start min-w-min w-4/5 gap-2"
       >
         <DataInput
-          props={{
-            type: 'text',
-            name: 'test',
-            id: 'test',
-            placeholder: 'test',
-          }}
-          message={'test-msg'}
+          props={{ ...inputs.name, ...register(FormNames.name) }}
+          message={errors[FormNames.name]?.message ?? ''}
         />
         <SubmitButton />
       </form>
