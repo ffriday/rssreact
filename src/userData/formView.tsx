@@ -7,15 +7,19 @@ export const FormView = () => {
 
   return (
     <>
-      <section className="w-full flex flex-col gap-5 items-center">
-        {componentData.map((data, i) => (
-          <UserCard
-            key={`${data.name}-${Date().toString()}`}
-            {...data}
-            first={i === 0 && updated.updated}
-          />
-        ))}
-      </section>
+      {componentData.length ? (
+        <section className="w-full flex flex-col gap-5 items-center">
+          {componentData.map((data, i) => (
+            <UserCard
+              key={`${data.name}-${Date().toString()}`}
+              {...data}
+              first={i === 0 && updated.updated}
+            />
+          ))}
+        </section>
+      ) : (
+        <p className="p-2">NO DATA</p>
+      )}
     </>
   );
 };
