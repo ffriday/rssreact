@@ -53,7 +53,7 @@ export const inputs = {
     type: 'checkbox',
     name: FormNames.accept,
     id: FormNames.accept,
-    placeholder: 'Gender',
+    placeholder: 'T&C',
   },
   [FormNames.image]: {
     type: 'file',

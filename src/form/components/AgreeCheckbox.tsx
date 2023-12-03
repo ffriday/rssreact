@@ -1,8 +1,10 @@
 import { TDataInput } from '../../constants/types';
 
 export const AgreeCheckbox = ({ props, message }: TDataInput) => {
+  const errorStyle = message ? ' rounded border-2 border-red-400' : '';
+
   return (
-    <div className="flex flex-col align-top">
+    <div className={`flex flex-col align-top ${errorStyle}`}>
       <div className="flex justify-start">
         <input {...props} className="mr-1" />
         <label htmlFor="accept">Accept T&C</label>

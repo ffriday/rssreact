@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useForm } from 'react-hook-form';
 import { FormNames, inputs, navLinks } from '../constants';
 import {
@@ -14,7 +13,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Links, TFormValidate } from '../constants/types';
 import { updateComponentData, useAppDispatch } from '../store';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { toBase64 } from '../helpers';
 
 export const HookForm = () => {
@@ -39,10 +37,6 @@ export const HookForm = () => {
       dispatch(updateComponentData(next));
       navigate(`/${Links.home}`);
     }
-  };
-
-  const confirmChange = (value: string) => {
-    const a = register(FormNames.confirm);
   };
 
   return (

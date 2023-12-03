@@ -19,7 +19,7 @@ export type TFormData = {
   [FormNames.gender]: string;
   [FormNames.confirm]: string;
   [FormNames.image]: string;
-  [FormNames.accept]: string;
+  [FormNames.accept]: boolean;
 };
 
 export type TFormValidate = Omit<TFormData, FormNames.image> & {

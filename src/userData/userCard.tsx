@@ -21,7 +21,7 @@ export const UserCard = ({
       <CardItem caption="Password" text={password} />
       <CardItem caption="Country" text={country} />
       <CardItem caption="Gender" text={gender} />
-      <CardItem caption="T&C confirmed" text={accept && 'yes'} />
+      <CardItem caption="T&C confirmed" text={accept ? 'yes' : ''} />
       <img
         src={image}
         alt="Image"

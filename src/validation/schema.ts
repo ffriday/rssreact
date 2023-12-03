@@ -1,4 +1,4 @@
-import { object, string, number, setLocale, mixed, ref } from 'yup';
+import { object, string, number, setLocale, mixed, ref, boolean } from 'yup';
 import { FormNames } from '../constants/types';
 import { countries } from '../constants';
 
@@ -65,7 +65,16 @@ export const formSchema = object({
       if (value.length) return value[0];
       return value;
     }),
-  [FormNames.accept]: string().required(),
+  [FormNames.accept]: boolean()
+    .required()
+    .test({
+      name: 'checked',
+      message: 'Oh, you forgot to check it',
+      test(value) {
+        return value;
+      },
+    })
+    .transform((value) => Boolean(value)),
 });
 
 export const fillSchema = (target: EventTarget & HTMLFormElement) => {
