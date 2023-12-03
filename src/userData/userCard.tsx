@@ -25,7 +25,7 @@ export const UserCard = ({
       <img
         src={image}
         alt="Image"
-        className="m-2 rounded max max-w-xs w-11/12 max-h-96 self-center"
+        className="m-2 rounded max max-w-xs w-11/12 max-h-96 self-center object-contain"
       />
     </div>
   );

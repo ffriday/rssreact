@@ -1,7 +1,7 @@
-import { FormNames, TDataProps } from '../../constants/types';
+import { FormNames, TDataInput } from '../../constants/types';
 import { useAppSelector } from '../../store/store';
 
-export const CountrySelect = ({ message, ...rest }: TDataProps) => {
+export const CountrySelect = ({ props, message }: TDataInput) => {
   const errorStyle = message ? ' border-red-400' : '';
   const data = useAppSelector((state) => state.countryReducer);
 
@@ -11,7 +11,7 @@ export const CountrySelect = ({ message, ...rest }: TDataProps) => {
         Country:
       </label>
       <input
-        {...rest}
+        {...props}
         list="countryList"
         className={`text-gray-900 placeholder-black::placeholder h-8 rounded border-2${errorStyle}`}
       />

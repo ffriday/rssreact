@@ -1,4 +1,4 @@
-import { object, string, number, setLocale, mixed } from 'yup';
+import { object, string, number, setLocale, mixed, ref } from 'yup';
 import { FormNames } from '../constants/types';
 import { countries } from '../constants';
 
@@ -37,14 +37,16 @@ export const formSchema = object({
       },
     }),
   [FormNames.gender]: string().required(),
-  [FormNames.confirm]: string().required(),
+  [FormNames.confirm]: string()
+    .oneOf([ref(FormNames.password)], 'Password not match')
+    .required(),
   [FormNames.image]: mixed((value): value is File => value instanceof File)
     .required()
     .test({
       name: 'size',
       message: 'Must be less then 1mb',
-      test(_, original) {
-        const file = original.originalValue as File;
+      test(value) {
+        const file = value as File;
         if (file.size <= 1000000) return true;
         return false;
       },
@@ -52,12 +54,16 @@ export const formSchema = object({
     .test({
       name: 'extension',
       message: 'Must be png or jpeg',
-      test(_, original) {
-        const file = original.originalValue as File;
+      test(value) {
+        const file = value as File;
         if (file.type === 'image/jpeg' || file.type === 'image/png')
           return true;
         return false;
       },
+    })
+    .transform((value) => {
+      if (value.length) return value[0];
+      return value;
     }),
   [FormNames.accept]: string().required(),
 });

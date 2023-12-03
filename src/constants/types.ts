@@ -36,11 +36,7 @@ type TProps = {
 export type TDataInput = {
   props: TProps;
   message: string;
-  onChange?: (value: string) => void;
 };
-
-export type TDataProps = Omit<TProps, 'placeholder'> &
-  Omit<TDataInput, 'props' | 'onChange'>;
 
 export enum Links {
   home = '',

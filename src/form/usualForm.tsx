@@ -19,15 +19,12 @@ export const UsualForm = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [errors, setErrors] = useState<ValidationError>();
-  const [confirmError, setConfirmError] = useState(true);
 
   const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = fillSchema(event.currentTarget);
     const valid = await formSchema.isValid(data);
-    const pwdMatches = data.password === data.confirm;
-    setConfirmError(pwdMatches);
-    if (valid && pwdMatches) {
+    if (valid) {
       const validated = formSchema.cast(data);
       const next = {
         ...validated,
@@ -68,22 +65,22 @@ export const UsualForm = () => {
         />
         <DataInput
           props={{ ...inputs.confirm }}
-          message={!confirmError ? 'Password not match' : ''}
+          message={findError(errors, FormNames.confirm)}
         />
         <CountrySelect
-          {...inputs.country}
+          props={{ ...inputs.country }}
           message={findError(errors, FormNames.country)}
         />
         <GenderSelector
-          {...inputs.gender}
+          props={{ ...inputs.gender }}
           message={findError(errors, FormNames.gender)}
         />
         <ImageUpload
-          {...inputs.image}
+          props={{ ...inputs.image }}
           message={findError(errors, FormNames.image)}
         />
         <AgreeCheckbox
-          {...inputs.accept}
+          props={{ ...inputs.accept }}
           message={findError(errors, FormNames.accept)}
         />
         <SubmitButton />
