@@ -1,6 +1,6 @@
 import { object, string, number, setLocale, mixed, ref, boolean } from 'yup';
 import { FormNames } from '../constants/types';
-import { countries } from '../constants';
+import { countries, emailRegex } from '../constants';
 
 setLocale({
   number: {},
@@ -18,7 +18,10 @@ export const formSchema = object({
     .min(0, 'Must be higher then 0')
     .integer('Must be an integer')
     .required(),
-  [FormNames.email]: string().email().required(),
+  [FormNames.email]: string()
+    .email()
+    .matches(emailRegex, 'email must be a valid email')
+    .required(),
   [FormNames.password]: string()
     .matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z\d]).*$/, {
       excludeEmptyString: true,
