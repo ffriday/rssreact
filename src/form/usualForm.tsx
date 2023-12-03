@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { ValidationError } from 'yup';
-import { inputs, navLinks } from '../constants';
-import { updateComponentData } from '../store';
-import { useAppDispatch, useAppSelector } from '../store/store';
+import { inputs, navLinks, FormNames } from '../constants';
+import { updateComponentData, useAppDispatch } from '../store';
 import {
   AgreeCheckbox,
   SubmitButton,
@@ -11,14 +10,12 @@ import {
   fillSchema,
   formSchema,
   ImageUpload,
+  CountrySelect,
 } from './components';
-import { findError, getValidationErrors } from '../helpers/functions';
-import { FormNames, TFormData } from '../constants/types';
-import { CountrySelect } from './components/countrySelect';
+import { findError, getValidationErrors, toBase64 } from '../helpers';
 
 export const UsualForm = () => {
   const dispatch = useAppDispatch();
-  const data = useAppSelector((state) => state.componentReducer);
   const [errors, setErrors] = useState<ValidationError>();
   const [confirmError, setConfirmError] = useState(true);
 
@@ -29,7 +26,12 @@ export const UsualForm = () => {
     const pwdMatches = data.password === data.confirm;
     setConfirmError(pwdMatches);
     if (valid && pwdMatches) {
-      dispatch(updateComponentData(formSchema.cast(data) as TFormData));
+      const validated = formSchema.cast(data);
+      const next = {
+        ...validated,
+        image: ((await toBase64(validated.image)) ?? '').toString(),
+      };
+      dispatch(updateComponentData(next));
       setErrors(new ValidationError(''));
     } else {
       setErrors(await getValidationErrors(data));
@@ -47,43 +49,39 @@ export const UsualForm = () => {
         className="flex flex-col items-start min-w-min w-4/5 gap-2"
       >
         <DataInput
-          props={{ ...inputs.name, defaultValue: data.name }}
+          props={{ ...inputs.name }}
           message={findError(errors, FormNames.name)}
         />
         <DataInput
-          props={{ ...inputs.age, defaultValue: data.age.toString() }}
+          props={{ ...inputs.age }}
           message={findError(errors, FormNames.age)}
         />
         <DataInput
-          props={{ ...inputs.email, defaultValue: data.email }}
+          props={{ ...inputs.email }}
           message={findError(errors, FormNames.email)}
         />
         <DataInput
-          props={{ ...inputs.password, defaultValue: data.password }}
+          props={{ ...inputs.password }}
           message={findError(errors, FormNames.password)}
         />
         <DataInput
-          props={{ ...inputs.confirm, defaultValue: data.password }}
+          props={{ ...inputs.confirm }}
           message={!confirmError ? 'Password not match' : ''}
         />
         <CountrySelect
           {...inputs.country}
-          defaultValue={data.country}
           message={findError(errors, FormNames.country)}
         />
         <GenderSelector
           {...inputs.gender}
-          defaultValue={data.gender}
           message={findError(errors, FormNames.gender)}
         />
         <ImageUpload
           {...inputs.image}
-          defaultValue={data.image}
           message={findError(errors, FormNames.image)}
         />
         <AgreeCheckbox
           {...inputs.accept}
-          defaultValue={data.accept}
           message={findError(errors, FormNames.accept)}
         />
         <SubmitButton />

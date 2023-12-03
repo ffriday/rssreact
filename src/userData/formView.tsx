@@ -3,11 +3,14 @@ import { UserCard } from './userCard';
 
 export const FormView = () => {
   const componentData = useAppSelector((state) => state.componentReducer);
-  const hookData = useAppSelector((state) => state.hookReducer);
+  console.log(componentData);
   return (
     <>
-      <UserCard {...componentData} />
-      <UserCard {...hookData} />
+      <section className="w-full flex flex-col gap-5 items-center">
+        {componentData.map((data) => (
+          <UserCard key={`${data.name}-${Date().toString()}`} {...data} />
+        ))}
+      </section>
     </>
   );
 };

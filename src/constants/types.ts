@@ -26,7 +26,6 @@ type TProps = {
   type: string;
   name: string;
   id: string;
-  defaultValue: string;
   placeholder: string;
 };
 

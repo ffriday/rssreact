@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Style, navLinks } from '../constants';
-import { useCurrentPage } from '../helpers/hooks';
+import { useCurrentPage } from '../helpers';
 
 export const Header = () => {
   const page = useCurrentPage();

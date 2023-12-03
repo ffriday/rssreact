@@ -38,24 +38,23 @@ export const formSchema = object({
     }),
   [FormNames.gender]: string().required(),
   [FormNames.confirm]: string().required(),
-  [FormNames.image]: mixed()
+  [FormNames.image]: mixed((value): value is File => value instanceof File)
     .required()
     .test({
       name: 'size',
       message: 'Must be less then 1mb',
-      test(value) {
-        if (value instanceof File && value.size <= 1000000) return true;
+      test(_, original) {
+        const file = original.originalValue as File;
+        if (file.size <= 1000000) return true;
         return false;
       },
     })
     .test({
       name: 'extension',
       message: 'Must be png or jpeg',
-      test(value) {
-        if (
-          value instanceof File &&
-          (value.type === 'image/jpeg' || value.type === 'image/png')
-        )
+      test(_, original) {
+        const file = original.originalValue as File;
+        if (file.type === 'image/jpeg' || file.type === 'image/png')
           return true;
         return false;
       },

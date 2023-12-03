@@ -1,15 +1,14 @@
 import {
   componentReducer,
-  hookReducer,
   updateComponentData,
-  updateHooktData,
   countryReducer,
 } from './formSlice';
+import { useAppDispatch, useAppSelector } from './store';
 
 export {
   componentReducer,
-  hookReducer,
   updateComponentData,
-  updateHooktData,
   countryReducer,
+  useAppDispatch,
+  useAppSelector,
 };

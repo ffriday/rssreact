@@ -4,6 +4,7 @@ import { DataInput } from './dataInput';
 import { GenderSelector } from './genderSelector';
 import { fillSchema, formSchema } from '../../validation/schema';
 import { ImageUpload } from './imageUpload';
+import { CountrySelect } from './countrySelect';
 
 export {
   AgreeCheckbox,
@@ -13,4 +14,5 @@ export {
   fillSchema,
   formSchema,
   ImageUpload,
+  CountrySelect,
 };
