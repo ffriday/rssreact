@@ -3,7 +3,7 @@ import { UserCard } from './userCard';
 
 export const FormView = () => {
   const componentData = useAppSelector((state) => state.componentReducer);
-  console.log(componentData);
+
   return (
     <>
       <section className="w-full flex flex-col gap-5 items-center">

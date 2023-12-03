@@ -8,7 +8,7 @@ const componentSlice = createSlice({
   initialState,
   reducers: {
     updateData(state, action: PayloadAction<TFormData>) {
-      state.push(action.payload);
+      state.unshift(action.payload);
     },
   },
 });

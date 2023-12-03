@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ValidationError } from 'yup';
-import { inputs, navLinks, FormNames } from '../constants';
+import { inputs, navLinks, FormNames, Links } from '../constants';
 import { updateComponentData, useAppDispatch } from '../store';
 import {
   AgreeCheckbox,
@@ -13,13 +13,15 @@ import {
   CountrySelect,
 } from './components';
 import { findError, getValidationErrors, toBase64 } from '../helpers';
+import { useNavigate } from 'react-router-dom';
 
 export const UsualForm = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [errors, setErrors] = useState<ValidationError>();
   const [confirmError, setConfirmError] = useState(true);
 
-  const sumbit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = fillSchema(event.currentTarget);
     const valid = await formSchema.isValid(data);
@@ -33,10 +35,10 @@ export const UsualForm = () => {
       };
       dispatch(updateComponentData(next));
       setErrors(new ValidationError(''));
+      navigate(`/${Links.home}`);
     } else {
       setErrors(await getValidationErrors(data));
     }
-    console.log(data);
   };
 
   return (
@@ -45,7 +47,7 @@ export const UsualForm = () => {
         {navLinks[1][1]}
       </h2>
       <form
-        onSubmit={sumbit}
+        onSubmit={submit}
         className="flex flex-col items-start min-w-min w-4/5 gap-2"
       >
         <DataInput
